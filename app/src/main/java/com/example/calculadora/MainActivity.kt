@@ -14,7 +14,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        this.setViewsAndListeners()
 
+    }
+
+    private fun setViewsAndListeners(){
         val zeroButton = findViewById<Button>(R.id.zero_button)
         val oneButton = findViewById<Button>(R.id.one_button)
         val twoButton = findViewById<Button>(R.id.two_button)
@@ -37,88 +41,38 @@ class MainActivity : AppCompatActivity() {
         this.result = findViewById<TextView>(R.id.result_view)
         this.equation = findViewById<TextView>(R.id.equation_view)
 
+        var botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
+            sevenButton, eightButton, nineButton, pointButton)
 
-        pointButton.setOnClickListener {
-            concatenarNumeros(pointButton.text.toString())
-            this.operacionDisponible = false
-        }
-
-        zeroButton.setOnClickListener {
-            concatenarNumeros(zeroButton.text.toString())
-        }
-        oneButton.setOnClickListener {
-            concatenarNumeros(oneButton.text.toString())
-        }
-        twoButton.setOnClickListener {
-            concatenarNumeros(twoButton.text.toString())
-        }
-        threeButton.setOnClickListener {
-            concatenarNumeros(threeButton.text.toString())
-        }
-        fourButton.setOnClickListener {
-            concatenarNumeros(fourButton.text.toString())
-        }
-        fiveButton.setOnClickListener {
-            concatenarNumeros(fiveButton.text.toString())
-        }
-        sixButton.setOnClickListener {
-            concatenarNumeros(sixButton.text.toString())
-        }
-        sevenButton.setOnClickListener {
-            concatenarNumeros(sevenButton.text.toString())
-        }
-        eightButton.setOnClickListener {
-            concatenarNumeros(eightButton.text.toString())
-        }
-        nineButton.setOnClickListener {
-            concatenarNumeros(nineButton.text.toString())
+        var botonesOperaciones = mutableListOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
+        for (boton in botonesOperaciones){
+            boton.setOnClickListener {
+                if (this.operacionDisponible) {
+                    if (this.equation.text == "") {
+                        this.equation.text = this.result.text
+                    }
+                    concatenarNumeros(boton.text.toString())
+                    this.operacionDisponible = false
+                }
+            }
         }
 
+        for (boton in botones){
+            boton.setOnClickListener {
+                concatenarNumeros(boton.text.toString())
+                if (boton == pointButton){
+                    this.operacionDisponible = false
+                }
+            }
+        }
+
+        //CLEAR
         clearButton.setOnClickListener {
             limpiarEquation()
         }
 
         equalsButton.setOnClickListener {
             prueba()
-        }
-
-        //4 operaciones
-        additionButton.setOnClickListener {
-            if (this.operacionDisponible) {
-                if (this.equation.text == "") {
-                    this.equation.text = this.result.text
-                }
-                concatenarNumeros(additionButton.text.toString())
-                this.operacionDisponible = false
-
-            }
-        }
-        subtractButton.setOnClickListener {
-            if (this.equation.text == "") {
-                this.equation.text = this.result.text
-            }
-            if (this.operacionDisponible) {
-                concatenarNumeros(subtractButton.text.toString())
-                this.operacionDisponible = false
-            }
-        }
-        multiplyButton.setOnClickListener {
-            if (this.equation.text == "") {
-                this.equation.text = this.result.text
-            }
-            if (this.operacionDisponible) {
-                concatenarNumeros(multiplyButton.text.toString())
-                this.operacionDisponible = false
-            }
-        }
-        divideButton.setOnClickListener {
-            if (this.equation.text == "") {
-                this.equation.text = this.result.text
-            }
-            if (this.operacionDisponible) {
-                concatenarNumeros(divideButton.text.toString())
-                this.operacionDisponible = false
-            }
         }
     }
 
@@ -198,11 +152,6 @@ class MainActivity : AppCompatActivity() {
         this.equation.text = ""
     }
 
-    fun armarTermino(digitos:String){ // 2 + (2*3) - 1  ->  +2*3 | +2 | -1
-        // [+2, +6, -1]
-
-    }
-
     fun ordenarOperadores(nuevoOperador:String, stack:ArrayDeque<String>, listaRes:MutableList<String>){
         var operadorTope = stack.last()
         while (operadorTope > nuevoOperador){
@@ -212,9 +161,7 @@ class MainActivity : AppCompatActivity() {
                 break
             }
             operadorTope = stack.last()
-
         }
-
     }
 
     fun realizarOperacion(n1:Float, n2:Float, operador:String): String {
@@ -225,8 +172,7 @@ class MainActivity : AppCompatActivity() {
             "x" -> resultado = n1 * n2
             "/" -> resultado = n1 / n2
         }
-        if ((resultado % 1) == 0F){
-            println("Resultado: $resultado")
+        if ((resultado % 1) == 0F){ // Si el resultado es .0, se omite la parte decimal.
             return resultado.toInt().toString()
         }
         return resultado.toString()
@@ -235,7 +181,5 @@ class MainActivity : AppCompatActivity() {
     fun ordenOperador(operador: String): Int {
         val orden_operadores = listOf("-", "+", "/", "x")
         return (orden_operadores.indexOf(operador))
-
-
     }
 }
