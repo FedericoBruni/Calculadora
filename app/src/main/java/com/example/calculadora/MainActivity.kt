@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
     protected lateinit var equation : TextView
     protected lateinit var result : TextView
     protected val operaciones = listOf("x", "/", "+", "-")
+//    protected lateinit var operaciones : List<Button>
     protected var operacionDisponible = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         var botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton, pointButton)
+
+//        this.operaciones = listOf(additionButton, subtractButton, multiplyButton, divideButton)
 
         var botonesOperaciones = mutableListOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
         for (boton in botonesOperaciones){
@@ -95,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         var contador = 1
         var numero = ""
         for (i in listaPrueba.indices){
-            if (listaPrueba[i] in this.operaciones){
+            if ((listaPrueba[i] in this.operaciones) && (i != 0)){
                 nuevaLista.add(listaPrueba[i])
                 continue
             }
@@ -153,14 +156,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ordenarOperadores(nuevoOperador:String, stack:ArrayDeque<String>, listaRes:MutableList<String>){
-        var operadorTope = stack.last()
-        while (operadorTope > nuevoOperador){
+        var ordenOperadorTope = ordenOperador(stack.last())
+        var ordenOperadorNuevo = ordenOperador(nuevoOperador)
+        while (ordenOperadorTope > ordenOperadorNuevo){
             listaRes.add(stack.removeLast())
             if (stack.isEmpty()){
                 stack.add(nuevoOperador)
                 break
             }
-            operadorTope = stack.last()
+            ordenOperadorTope = ordenOperador(stack.last())
         }
     }
 
