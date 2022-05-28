@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         clearButton.setOnClickListener {
             limpiarEquation()
             this.puntoDisponible = true
+            this.operacionDisponible = true
         }
 
         equalsButton.setOnClickListener {
@@ -104,6 +105,7 @@ class MainActivity : AppCompatActivity() {
     fun limpiarEquation(){
         this.equation.text = ""
         this.result.text = ""
+
     }
 
     fun prueba(){
@@ -160,8 +162,8 @@ class MainActivity : AppCompatActivity() {
                 ultimaLista.add(listaRes[i])
             } else {
                 val ultimaPos = ultimaLista.size - 1
-                val n1 = ultimaLista[ultimaPos - 1].toFloat()
-                val n2 = ultimaLista[ultimaPos].toFloat()
+                val n1 = ultimaLista[ultimaPos - 1].toBigDecimal()
+                val n2 = ultimaLista[ultimaPos].toBigDecimal()
                 println("N1: $n1 \nN2: $n2")
                 ultimaLista[ultimaPos-1] = realizarOperacion(n1, n2, listaRes[i])
                 ultimaLista.removeAt(ultimaPos)
@@ -185,40 +187,87 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
-//        lateinit var resultado: BigDecimal
+    fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
+        lateinit var resultado: BigDecimal
+        when(operador) {
+            "+" -> resultado = n1.add(n2)
+            "-" -> resultado = n1.subtract(n2)
+            "x" -> resultado = n1.multiply(n2)
+            "/" -> resultado = n1.divide(n2, 10, RoundingMode.HALF_UP)
+        }
+//        resultado.stripTrailingZeros()
+//        lateinit var a : BigDecimal
+//        a = BigDecimal(599.8) + BigDecimal(0.2)
+//        println("Antes: $a")
+//        a.stripTrailingZeros()
+//        println("Después: $a")
+//        a = a.stripTrailingZeros()
+//        println("Otro después: $a")
+        //resultado = resultado.setScale(1, RoundingMode.UP)
+        var r = resultado.toString()
+        r = removerCerosDerecha(r)
+        r = removerCerosIzquierda(r)
+        return r
+        //return resultado.toString()
+    }
+
+    fun removerCerosIzquierda(num:String) : String{
+        val indicePunto = num.indexOf(".")
+        if (indicePunto == -1) return num
+        var contador = 0
+        for (i in 0..indicePunto){
+            if (num[i] != '0'){
+                break
+            }
+            contador = i
+        }
+        return num.removeRange(0..contador-1)
+    }
+
+//    fun removerCerosDerecha(num:String) : String{
+//        val indicePunto = num.indexOf(".")
+//        if (indicePunto == -1) return num
+//        for (i in indicePunto+1..num.length-1){
+//            if (num[i] != '0'){
+//                return num
+//            }
+//        }
+//        //var n = num.removeRange(indicePunto..num.length-1)
+//        return num.removeRange(indicePunto..num.length-1)
+//    }
+
+    fun removerCerosDerecha(num:String) : String{
+        val indicePunto = num.indexOf(".")
+        if (indicePunto == -1) return num
+        val len = num.length
+        var contador = 0
+        for (i in len-1 downTo indicePunto){
+            //println("i: $i")
+            if (num[i] != '0'){
+                break
+            }
+            contador = i
+        } // arreglar esto!
+        if (contador == 2) return num
+        println("len: $len\ncontador: $contador\nnum: $num")
+        return num.removeRange(contador..len-1)
+    }
+
+//    fun realizarOperacion(n1:Float, n2:Float, operador:String): String {
+//        var resultado: Float = 0F
 //        when(operador) {
 //            "+" -> resultado = n1 + n2
 //            "-" -> resultado = n1 - n2
 //            "x" -> resultado = n1 * n2
 //            "/" -> resultado = n1 / n2
 //        }
-////        resultado.stripTrailingZeros()
-////        lateinit var a : BigDecimal
-////        a = BigDecimal(599.8) + BigDecimal(0.2)
-////        println("Antes: $a")
-////        a.stripTrailingZeros()
-////        println("Después: $a")
-////        a = a.stripTrailingZeros()
-////        println("Otro después: $a")
-//        resultado = resultado.setScale(1, RoundingMode.UP)
+//        println("Resultado: $resultado")
+//        if ((resultado % 1) == 0F){ // Si el resultado es .0, se omite la parte decimal.
+//            return resultado.toInt().toString()
+//        }
+//        //resultado = resultado.toBigDecimal().setScale(5, RoundingMode.UP).toFloat()
 //        return resultado.toString()
 //    }
-    fun realizarOperacion(n1:Float, n2:Float, operador:String): String {
-        var resultado: Float = 0F
-        when(operador) {
-            "+" -> resultado = n1 + n2
-            "-" -> resultado = n1 - n2
-            "x" -> resultado = n1 * n2
-            "/" -> resultado = n1 / n2
-        }
-        println("Resultado: $resultado")
-        if ((resultado % 1) == 0F){ // Si el resultado es .0, se omite la parte decimal.
-            return resultado.toInt().toString()
-        }
-        //resultado = resultado.toBigDecimal().setScale(5, RoundingMode.UP).toFloat()
-        return resultado.toString()
-    }
 
     fun ordenOperador(operador: String): Int {
         val orden_operadores = listOf("-", "+", "/", "x")
