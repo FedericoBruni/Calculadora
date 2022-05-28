@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
     protected lateinit var equation : TextView
@@ -12,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     protected val operaciones = listOf("x", "/", "+", "-")
 //    protected lateinit var operaciones : List<Button>
     protected var operacionDisponible = true
+    protected var puntoDisponible = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         this.equation = findViewById<TextView>(R.id.equation_view)
 
         var botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
-            sevenButton, eightButton, nineButton, pointButton)
+            sevenButton, eightButton, nineButton)
 
 //        this.operaciones = listOf(additionButton, subtractButton, multiplyButton, divideButton)
 
@@ -56,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     concatenarNumeros(boton.text.toString())
                     this.operacionDisponible = false
+                    this.puntoDisponible = true
                 }
             }
         }
@@ -69,13 +73,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        pointButton.setOnClickListener {
+            if (this.puntoDisponible) {
+                concatenarNumeros(pointButton.text.toString())
+                this.operacionDisponible = false
+                this.puntoDisponible = false
+            }
+        }
+
         //CLEAR
         clearButton.setOnClickListener {
             limpiarEquation()
+            this.puntoDisponible = true
         }
 
         equalsButton.setOnClickListener {
-            prueba()
+            if (this.operacionDisponible && this.equation.text != ""){
+                prueba()
+            }
+            this.puntoDisponible = true
+
         }
     }
 
@@ -86,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     fun limpiarEquation(){
         this.equation.text = ""
-        this.result.text = "0"
+        this.result.text = ""
     }
 
     fun prueba(){
@@ -127,7 +144,6 @@ class MainActivity : AppCompatActivity() {
                         stack.add(nuevaLista[i])
                     } else {
                         ordenarOperadores(nuevaLista[i], stack, listaRes)
-                        println("Lista: $listaRes \nStack: $stack")
                     }
                 }
             } else {
@@ -146,6 +162,7 @@ class MainActivity : AppCompatActivity() {
                 val ultimaPos = ultimaLista.size - 1
                 val n1 = ultimaLista[ultimaPos - 1].toFloat()
                 val n2 = ultimaLista[ultimaPos].toFloat()
+                println("N1: $n1 \nN2: $n2")
                 ultimaLista[ultimaPos-1] = realizarOperacion(n1, n2, listaRes[i])
                 ultimaLista.removeAt(ultimaPos)
             }
@@ -168,6 +185,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
+//        lateinit var resultado: BigDecimal
+//        when(operador) {
+//            "+" -> resultado = n1 + n2
+//            "-" -> resultado = n1 - n2
+//            "x" -> resultado = n1 * n2
+//            "/" -> resultado = n1 / n2
+//        }
+////        resultado.stripTrailingZeros()
+////        lateinit var a : BigDecimal
+////        a = BigDecimal(599.8) + BigDecimal(0.2)
+////        println("Antes: $a")
+////        a.stripTrailingZeros()
+////        println("Después: $a")
+////        a = a.stripTrailingZeros()
+////        println("Otro después: $a")
+//        resultado = resultado.setScale(1, RoundingMode.UP)
+//        return resultado.toString()
+//    }
     fun realizarOperacion(n1:Float, n2:Float, operador:String): String {
         var resultado: Float = 0F
         when(operador) {
@@ -176,9 +212,11 @@ class MainActivity : AppCompatActivity() {
             "x" -> resultado = n1 * n2
             "/" -> resultado = n1 / n2
         }
+        println("Resultado: $resultado")
         if ((resultado % 1) == 0F){ // Si el resultado es .0, se omite la parte decimal.
             return resultado.toInt().toString()
         }
+        //resultado = resultado.toBigDecimal().setScale(5, RoundingMode.UP).toFloat()
         return resultado.toString()
     }
 
