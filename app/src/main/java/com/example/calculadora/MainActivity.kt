@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
     protected lateinit var equation : TextView
     protected lateinit var result : TextView
     protected val operaciones = listOf("x", "/", "+", "-")
-//    protected lateinit var operaciones : List<Button>
     protected var operacionDisponible = true
     protected var puntoDisponible = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,7 +104,6 @@ class MainActivity : AppCompatActivity() {
     fun limpiarEquation(){
         this.equation.text = ""
         this.result.text = ""
-
     }
 
     fun prueba(){
@@ -135,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         // Ya tengo la lista [123, +, 456]
         var stack = ArrayDeque<String>()
         var listaRes = mutableListOf<String>()
+        println("Lista antes: $nuevaLista")
         for (i in nuevaLista.indices){
             if (nuevaLista[i] in this.operaciones){
                 if (stack.isEmpty()){
@@ -142,7 +141,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     val ordenNuevoOp = ordenOperador(nuevaLista[i])
                     val ordenTope = ordenOperador(stack.last())
-                    if (ordenTope <= ordenNuevoOp){
+                    if (ordenTope <  ordenNuevoOp){
                         stack.add(nuevaLista[i])
                     } else {
                         ordenarOperadores(nuevaLista[i], stack, listaRes)
@@ -156,6 +155,7 @@ class MainActivity : AppCompatActivity() {
             listaRes.add(stack.removeLast())
         }
         // Ya tengo [10, 2, 3, *, +]
+        println("Lista depois: $listaRes")
         var ultimaLista = mutableListOf<String>()
         for (i in listaRes.indices){
             if (!(listaRes[i] in this.operaciones)){
@@ -177,14 +177,16 @@ class MainActivity : AppCompatActivity() {
     fun ordenarOperadores(nuevoOperador:String, stack:ArrayDeque<String>, listaRes:MutableList<String>){
         var ordenOperadorTope = ordenOperador(stack.last())
         var ordenOperadorNuevo = ordenOperador(nuevoOperador)
-        while (ordenOperadorTope > ordenOperadorNuevo){
+        while (ordenOperadorTope >= ordenOperadorNuevo){
             listaRes.add(stack.removeLast())
             if (stack.isEmpty()){
                 stack.add(nuevoOperador)
-                break
+                return
             }
             ordenOperadorTope = ordenOperador(stack.last())
         }
+//        if (ordenOperadorTope < ordenOperadorNuevo) stack.add(nuevoOperador)
+//        if (ordenOperadorTope == ordenOperadorNuevo) listaRes.add(nuevoOperador)
     }
 
     fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
@@ -195,20 +197,7 @@ class MainActivity : AppCompatActivity() {
             "x" -> resultado = n1.multiply(n2)
             "/" -> resultado = n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
-//        resultado.stripTrailingZeros()
-//        lateinit var a : BigDecimal
-//        a = BigDecimal(599.8) + BigDecimal(0.2)
-//        println("Antes: $a")
-//        a.stripTrailingZeros()
-//        println("Después: $a")
-//        a = a.stripTrailingZeros()
-//        println("Otro después: $a")
-        //resultado = resultado.setScale(1, RoundingMode.UP)
-        var r = resultado.toString()
-        r = removerCerosDerecha(r)
-        r = removerCerosIzquierda(r)
-        return r
-        //return resultado.toString()
+        return removerCerosIzquierda(removerCerosDerecha(resultado.toString()))
     }
 
     fun removerCerosIzquierda(num:String) : String{
@@ -224,53 +213,31 @@ class MainActivity : AppCompatActivity() {
         return num.removeRange(0..contador-1)
     }
 
-//    fun removerCerosDerecha(num:String) : String{
-//        val indicePunto = num.indexOf(".")
-//        if (indicePunto == -1) return num
-//        for (i in indicePunto+1..num.length-1){
-//            if (num[i] != '0'){
-//                return num
-//            }
-//        }
-//        //var n = num.removeRange(indicePunto..num.length-1)
-//        return num.removeRange(indicePunto..num.length-1)
-//    }
-
-    fun removerCerosDerecha(num:String) : String{
+    fun removerCerosDerecha(num:String) : String {
         val indicePunto = num.indexOf(".")
         if (indicePunto == -1) return num
         val len = num.length
         var contador = 0
         for (i in len-1 downTo indicePunto){
-            //println("i: $i")
             if (num[i] != '0'){
                 break
             }
-            contador = i
-        } // arreglar esto!
-        if (contador == 2) return num
-        println("len: $len\ncontador: $contador\nnum: $num")
-        return num.removeRange(contador..len-1)
+            contador++
+        }
+        if (contador == 0) return num
+        if (num[indicePunto + 1] != '0') contador --
+        return num.removeRange(len-contador-1..len-1)
     }
 
-//    fun realizarOperacion(n1:Float, n2:Float, operador:String): String {
-//        var resultado: Float = 0F
-//        when(operador) {
-//            "+" -> resultado = n1 + n2
-//            "-" -> resultado = n1 - n2
-//            "x" -> resultado = n1 * n2
-//            "/" -> resultado = n1 / n2
-//        }
-//        println("Resultado: $resultado")
-//        if ((resultado % 1) == 0F){ // Si el resultado es .0, se omite la parte decimal.
-//            return resultado.toInt().toString()
-//        }
-//        //resultado = resultado.toBigDecimal().setScale(5, RoundingMode.UP).toFloat()
-//        return resultado.toString()
-//    }
-
     fun ordenOperador(operador: String): Int {
-        val orden_operadores = listOf("-", "+", "/", "x")
-        return (orden_operadores.indexOf(operador))
+//        val orden_operadores = listOf("-", "+", "/", "x")
+//        return (orden_operadores.indexOf(operador))
+        when (operador){
+            "-" -> return 0
+            "+" -> return 0
+            "/" -> return 1
+            "x" -> return 2
+        }
+        return -1
     }
 }
