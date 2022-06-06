@@ -1,19 +1,19 @@
 package com.example.calculadora
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
-    protected lateinit var equation : TextView
-    protected lateinit var result : TextView
-    protected val operaciones = listOf("x", "/", "+", "-")
-    protected var operacionDisponible = true
-    protected var puntoDisponible = true
+    private lateinit var equation : TextView
+    private lateinit var result : TextView
+    private val operaciones = listOf("x", "/", "+", "-")
+    private var operacionDisponible = true
+    private var puntoDisponible = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         val nineButton = findViewById<Button>(R.id.nine_button)
 
         val clearButton = findViewById<Button>(R.id.clear_button)
+        val deleteButton = findViewById<Button>(R.id.delete_button)
         val equalsButton = findViewById<Button>(R.id.equals_button)
         val pointButton = findViewById<Button>(R.id.point_button)
         val divideButton = findViewById<Button>(R.id.divide_button)
@@ -41,15 +42,15 @@ class MainActivity : AppCompatActivity() {
         val additionButton = findViewById<Button>(R.id.addition_button)
         val subtractButton = findViewById<Button>(R.id.subtract_button)
 
-        this.result = findViewById<TextView>(R.id.result_view)
-        this.equation = findViewById<TextView>(R.id.equation_view)
+        this.result = findViewById(R.id.result_view)
+        this.equation = findViewById(R.id.equation_view)
 
-        var botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
+        val botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton)
 
 //        this.operaciones = listOf(additionButton, subtractButton, multiplyButton, divideButton)
 
-        var botonesOperaciones = mutableListOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
+        val botonesOperaciones = mutableListOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
         for (boton in botonesOperaciones){
             boton.setOnClickListener {
                 if (this.operacionDisponible) {
@@ -94,24 +95,37 @@ class MainActivity : AppCompatActivity() {
             this.puntoDisponible = true
 
         }
+
+        deleteButton.setOnClickListener {
+            if (this.equation.text.isEmpty()){
+                println("ajajaj t dije!")
+                return@setOnClickListener
+            }
+            val nuevaEcuacion = this.equation.text.dropLast(1)
+            val caracterBorrado = this.equation.text[this.equation.text.length-1].toString()
+            if (caracterBorrado in this.operaciones) this.operacionDisponible = true
+            else if (caracterBorrado == ".") this.puntoDisponible = true
+            this.equation.text = nuevaEcuacion
+        }
     }
 
-    fun concatenarNumeros(digito:String){
+    @SuppressLint("SetTextI18n")
+    private fun concatenarNumeros(digito:String){
         this.equation.text = "${this.equation.text}${digito.lowercase()}"
         this.operacionDisponible = true
     }
 
-    fun limpiarEquation(){
+    private fun limpiarEquation(){
         this.equation.text = ""
         this.result.text = ""
     }
 
-    fun prueba(){
-        var listaPrueba = this.equation.text.split("").toMutableList()
+    private fun prueba(){
+        val listaPrueba = this.equation.text.split("").toMutableList()
         listaPrueba.removeAt(0)
         listaPrueba.removeAt(listaPrueba.size - 1)
         // Ya quedó [1, 2, 3, +, 4, 5, 6]
-        var nuevaLista = mutableListOf<String>()
+        val nuevaLista = mutableListOf<String>()
         var contador = 1
         var numero = ""
         for (i in listaPrueba.indices){
@@ -131,8 +145,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // Ya tengo la lista [123, +, 456]
-        var stack = ArrayDeque<String>()
-        var listaRes = mutableListOf<String>()
+        val stack = ArrayDeque<String>()
+        val listaRes = mutableListOf<String>()
         println("Lista antes: $nuevaLista")
         for (i in nuevaLista.indices){
             if (nuevaLista[i] in this.operaciones){
@@ -156,9 +170,9 @@ class MainActivity : AppCompatActivity() {
         }
         // Ya tengo [10, 2, 3, *, +]
         println("Lista depois: $listaRes")
-        var ultimaLista = mutableListOf<String>()
+        val ultimaLista = mutableListOf<String>()
         for (i in listaRes.indices){
-            if (!(listaRes[i] in this.operaciones)){
+            if (listaRes[i] !in this.operaciones){
                 ultimaLista.add(listaRes[i])
             } else {
                 val ultimaPos = ultimaLista.size - 1
@@ -170,13 +184,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val resultado = ultimaLista[0]
-        this.result.text = "$resultado"
+        this.result.text = resultado
         this.equation.text = ""
     }
 
-    fun ordenarOperadores(nuevoOperador:String, stack:ArrayDeque<String>, listaRes:MutableList<String>){
+    private fun ordenarOperadores(nuevoOperador:String, stack:ArrayDeque<String>, listaRes:MutableList<String>){
         var ordenOperadorTope = ordenOperador(stack.last())
-        var ordenOperadorNuevo = ordenOperador(nuevoOperador)
+        val ordenOperadorNuevo = ordenOperador(nuevoOperador)
         while (ordenOperadorTope >= ordenOperadorNuevo){
             listaRes.add(stack.removeLast())
             if (stack.isEmpty()){
@@ -189,7 +203,7 @@ class MainActivity : AppCompatActivity() {
 //        if (ordenOperadorTope == ordenOperadorNuevo) listaRes.add(nuevoOperador)
     }
 
-    fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
+    private fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
         lateinit var resultado: BigDecimal
         when(operador) {
             "+" -> resultado = n1.add(n2)
@@ -200,7 +214,7 @@ class MainActivity : AppCompatActivity() {
         return removerCerosIzquierda(removerCerosDerecha(resultado.toString()))
     }
 
-    fun removerCerosIzquierda(num:String) : String{
+    private fun removerCerosIzquierda(num:String) : String{
         val indicePunto = num.indexOf(".")
         if (indicePunto == -1) return num
         var contador = 0
@@ -210,10 +224,10 @@ class MainActivity : AppCompatActivity() {
             }
             contador = i
         }
-        return num.removeRange(0..contador-1)
+        return num.removeRange(0 until contador)
     }
 
-    fun removerCerosDerecha(num:String) : String {
+    private fun removerCerosDerecha(num:String) : String {
         val indicePunto = num.indexOf(".")
         if (indicePunto == -1) return num
         val len = num.length
@@ -226,10 +240,10 @@ class MainActivity : AppCompatActivity() {
         }
         if (contador == 0) return num
         if (num[indicePunto + 1] != '0') contador --
-        return num.removeRange(len-contador-1..len-1)
+        return num.removeRange(len-contador-1 until len)
     }
 
-    fun ordenOperador(operador: String): Int {
+    private fun ordenOperador(operador: String): Int {
 //        val orden_operadores = listOf("-", "+", "/", "x")
 //        return (orden_operadores.indexOf(operador))
         when (operador){
