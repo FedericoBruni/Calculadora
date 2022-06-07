@@ -319,7 +319,8 @@
         android:gravity="center|end"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
-        android:textSize="34sp"
+        android:textSize="48sp"
+        android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
@@ -364,11 +365,14 @@
         android:gravity="center|end"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
-        android:textSize="34sp"
+        android:textSize="48sp"
+        android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/delete_button"
