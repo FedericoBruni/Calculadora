@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private var operacionDisponible = true
     private var puntoDisponible = true
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.setViewsAndListeners()
