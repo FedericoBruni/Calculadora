@@ -3,23 +3,52 @@ package com.example.calculadora
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
     private lateinit var equation : TextView
     private lateinit var result : TextView
-    private val operaciones = listOf("x", "/", "+", "-")
+    private val operaciones = listOf("x", "÷", "+", "-")
     private var operacionDisponible = true
     private var puntoDisponible = true
+
+    lateinit var toggle : ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.setViewsAndListeners()
 
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        val navView = findViewById<NavigationView>(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        navView.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.nav_rate_us -> Toast.makeText(applicationContext, "Rate Us", Toast.LENGTH_SHORT).show()
+                R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
+                R.id.nav_other_apps -> Toast.makeText(applicationContext, "Other Apps", Toast.LENGTH_SHORT).show()
+                R.id.nav_about_us -> Toast.makeText(applicationContext, "About Us", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return toggle.onOptionsItemSelected(item)
     }
 
     private fun setViewsAndListeners(){
@@ -210,7 +239,7 @@ class MainActivity : AppCompatActivity() {
             "+" -> resultado = n1.add(n2)
             "-" -> resultado = n1.subtract(n2)
             "x" -> resultado = n1.multiply(n2)
-            "/" -> resultado = n1.divide(n2, 10, RoundingMode.HALF_UP)
+            "÷" -> resultado = n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
         return removerCerosIzquierda(removerCerosDerecha(resultado.toString()))
     }
