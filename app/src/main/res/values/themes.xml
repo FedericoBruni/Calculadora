@@ -19,4 +19,8 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:statusBarColor">@color/teal_200</item>
     </style>
+
+    <style name="Theme.ItemMenu" parent="android:Widget.TextView">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

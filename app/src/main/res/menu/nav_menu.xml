@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_rate_us"
+                android:checkable="false"
+                android:icon="@drawable/ic_baseline_rate_review_24"
+                android:title="Rate Us">
+            </item>
+            <item
+                android:id="@+id/nav_share"
+                android:title="Share"
+                android:icon="@drawable/ic_baseline_share_24">
+            </item>
+
+            <item
+                android:id="@+id/nav_other_apps"
+                android:title="Other Apps"
+                android:icon="@drawable/ic_baseline_more_24">
+            </item>
+            <item
+                android:id="@+id/nav_about_us"
+                android:title="About Us"
+                android:icon="@drawable/ic_baseline_info_24">
+            </item>
+        </menu>
+
+    </item>
+
+</menu>

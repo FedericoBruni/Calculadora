@@ -1,17 +1,26 @@
 package com.example.calculadora
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
+
+const val TEXT_BLUE = "\u001B[34m"
+const val TEXT_RESET = "\u001B[0m"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var equation : TextView
@@ -21,11 +30,23 @@ class MainActivity : AppCompatActivity() {
     private var puntoDisponible = true
 
     lateinit var toggle : ActionBarDrawerToggle
+
+    //private var mInterstitialAd: InterstitialAd? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        //MobileAds.initialize(this@MainActivity)
+        //loadInterAd()
         setContentView(R.layout.activity_main)
+        //showInterAd()
+
+
         this.setViewsAndListeners()
+
+
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -35,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_rate_us -> Toast.makeText(applicationContext, "Rate Us", Toast.LENGTH_SHORT).show()
@@ -50,6 +70,35 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return toggle.onOptionsItemSelected(item)
     }
+
+//    private fun showInterAd() {
+//        println("$TEXT_BLUE showInterAd $TEXT_RESET")
+//        if (mInterstitialAd != null) {
+//            println("ajajaj")
+//            mInterstitialAd?.show(this)
+//        } else {
+//            println()
+//            println("es null :(")
+//            println()
+//        }
+//    }
+
+//    private fun loadInterAd() {
+//        var adRequest = AdRequest.Builder().build()
+//
+//        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+//            override fun onAdFailedToLoad(adError: LoadAdError) {
+//                println("Hubo error bro")
+//                mInterstitialAd = null
+//            }
+//
+//            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                mInterstitialAd = interstitialAd
+//                interstitialAd.show(this@MainActivity)
+//                println("Se cargó el anuncio.")
+//            }
+//        })
+//    }
 
     private fun setViewsAndListeners(){
         val zeroButton = findViewById<Button>(R.id.zero_button)
