@@ -12,22 +12,23 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 class SplashScreenActivity : AppCompatActivity() {
     private var mInterstitialAd: InterstitialAd? = null
     override fun onCreate(savedInstanceState: Bundle?) {
-        MobileAds.initialize(this)
+
+        //MobileAds.initialize(this)
         loadInterAd()
-        Thread.sleep(2000)
+
+        //Thread.sleep(2000)
         super.onCreate(savedInstanceState)
-
-
-
         startActivity(Intent(this, MainActivity::class.java))
         finish()
-
     }
 
     private fun loadInterAd() {
         var adRequest = AdRequest.Builder().build()
 
+        //ca-app-pub-3940256099942544/3419835294 carga
+        //ca-app-pub-3940256099942544/1033173712 interstitial
         InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 println("Hubo error bro")
                 mInterstitialAd = null
@@ -35,9 +36,11 @@ class SplashScreenActivity : AppCompatActivity() {
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 mInterstitialAd = interstitialAd
-                interstitialAd.show(this@SplashScreenActivity)
-                println("Se cargó el anuncio.")
+                mInterstitialAd?.show(this@SplashScreenActivity)
+
+                //println("Se cargó el anuncio.")
             }
+
         })
     }
 }

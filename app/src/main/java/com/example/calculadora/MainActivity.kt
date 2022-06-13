@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        //Thread.sleep(2000)
         super.onCreate(savedInstanceState)
 
         //MobileAds.initialize(this@MainActivity)
