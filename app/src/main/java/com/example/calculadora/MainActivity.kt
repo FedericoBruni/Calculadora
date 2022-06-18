@@ -12,15 +12,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
-
-const val TEXT_BLUE = "\u001B[34m"
-const val TEXT_RESET = "\u001B[0m"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var equation : TextView
@@ -28,25 +24,16 @@ class MainActivity : AppCompatActivity() {
     private val operaciones = listOf("x", "÷", "+", "-")
     private var operacionDisponible = true
     private var puntoDisponible = true
-
     lateinit var toggle : ActionBarDrawerToggle
 
-    //private var mInterstitialAd: InterstitialAd? = null
-
+    private var count = 0
+    private var interAd : InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //Thread.sleep(2000)
         super.onCreate(savedInstanceState)
-
-        //MobileAds.initialize(this@MainActivity)
-        //loadInterAd()
         setContentView(R.layout.activity_main)
-        //showInterAd()
-
-
+        startAds()
         this.setViewsAndListeners()
-
-
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -54,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
@@ -67,38 +53,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Para que cargue un inter muchas veces, habría que separar los iniciadores y llamar a startInter() cada vez que
+    //el count sea 0.
+    private fun startAds() {
+        val adBanner = findViewById<AdView>(R.id.banner)
+        val adRequest = AdRequest.Builder().build()
+        adBanner.loadAd(adRequest)
+
+        InterstitialAd.load(this, "ca-app-pub-3940256099942544/8691691433", adRequest, object : InterstitialAdLoadCallback(){
+            override fun onAdFailedToLoad(interstitialAd: LoadAdError) {
+                interAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                interAd = interstitialAd
+            }
+
+        })
+    }
+
+    // Funciona como el onClickListener para el drawer navigation bar. NO funciona si se desliza, sólo cuando se clickea.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        count ++
+        Toast.makeText(applicationContext, "Clickeaste $count veces", Toast.LENGTH_SHORT).show()
+        checkCount()
         return toggle.onOptionsItemSelected(item)
     }
 
-//    private fun showInterAd() {
-//        println("$TEXT_BLUE showInterAd $TEXT_RESET")
-//        if (mInterstitialAd != null) {
-//            println("ajajaj")
-//            mInterstitialAd?.show(this)
-//        } else {
-//            println()
-//            println("es null :(")
-//            println()
-//        }
-//    }
+    private fun checkCount() {
+        if (count == 5){
+            showInterAd()
+            count = 0
+        }
+    }
 
-//    private fun loadInterAd() {
-//        var adRequest = AdRequest.Builder().build()
-//
-//        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-//            override fun onAdFailedToLoad(adError: LoadAdError) {
-//                println("Hubo error bro")
-//                mInterstitialAd = null
-//            }
-//
-//            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-//                mInterstitialAd = interstitialAd
-//                interstitialAd.show(this@MainActivity)
-//                println("Se cargó el anuncio.")
-//            }
-//        })
-//    }
+    private fun showInterAd(){
+        interAd?.show(this)
+    }
 
     private fun setViewsAndListeners(){
         val zeroButton = findViewById<Button>(R.id.zero_button)

@@ -3,44 +3,23 @@ package com.example.calculadora
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+
+private const val COUNTER_TIME = 2L
+
+private const val LOG_TAG = "SplashActivity"
 
 class SplashScreenActivity : AppCompatActivity() {
-    private var mInterstitialAd: InterstitialAd? = null
+
+    private var secondsRemaining: Long = 0L
+
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        //MobileAds.initialize(this)
-        loadInterAd()
-
-        //Thread.sleep(2000)
         super.onCreate(savedInstanceState)
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        startMainActivity()
     }
 
-    private fun loadInterAd() {
-        var adRequest = AdRequest.Builder().build()
-
-        //ca-app-pub-3940256099942544/3419835294 carga
-        //ca-app-pub-3940256099942544/1033173712 interstitial
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                println("Hubo error bro")
-                mInterstitialAd = null
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
-                mInterstitialAd?.show(this@SplashScreenActivity)
-
-                //println("Se cargó el anuncio.")
-            }
-
-        })
+    fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
