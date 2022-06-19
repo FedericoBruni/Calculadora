@@ -4,7 +4,7 @@ import android.app.Application
 import com.google.android.gms.ads.*
 
 
-class Calculadora : Application() {
+class Calculator : Application() {
 
 
     override fun onCreate() {

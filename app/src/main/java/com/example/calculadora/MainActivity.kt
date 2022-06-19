@@ -21,10 +21,10 @@ import java.math.RoundingMode
 class MainActivity : AppCompatActivity() {
     private lateinit var equation : TextView
     private lateinit var result : TextView
-    private val operaciones = listOf("x", "÷", "+", "-")
-    private var operacionDisponible = true
-    private var puntoDisponible = true
-    lateinit var toggle : ActionBarDrawerToggle
+    private val operations = listOf("x", "÷", "+", "-")
+    private var operationFree = true
+    private var pointFree = true
+    private lateinit var toggle : ActionBarDrawerToggle
 
     private var count = 0
     private var interAd : InterstitialAd? = null
@@ -115,53 +115,53 @@ class MainActivity : AppCompatActivity() {
         this.result = findViewById(R.id.result_view)
         this.equation = findViewById(R.id.equation_view)
 
-        val botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
+        val buttons = listOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton)
+        val operationButtons = listOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
 
-        val botonesOperaciones = mutableListOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
-        for (boton in botonesOperaciones){
-            boton.setOnClickListener {
-                if (this.operacionDisponible) {
+        for (btn in operationButtons){
+            btn.setOnClickListener {
+                if (this.operationFree) {
                     if (this.equation.text == "") {
-                        if ((boton != subtractButton) && (this.result.text == "")) return@setOnClickListener
+                        if ((btn != subtractButton) && (this.result.text == "")) return@setOnClickListener
                         this.equation.text = this.result.text
                     }
-                    concatenarNumeros(boton.text.toString())
-                    this.operacionDisponible = false
-                    this.puntoDisponible = true
+                    concatenateNumbers(btn.text.toString())
+                    this.operationFree = false
+                    this.pointFree = true
                 }
             }
         }
 
-        for (boton in botones){
-            boton.setOnClickListener {
-                concatenarNumeros(boton.text.toString())
-                if (boton == pointButton){
-                    this.operacionDisponible = false
+        for (btn in buttons){
+            btn.setOnClickListener {
+                concatenateNumbers(btn.text.toString())
+                if (btn == pointButton){
+                    this.operationFree = false
                 }
             }
         }
 
         pointButton.setOnClickListener {
-            if (this.puntoDisponible) {
-                concatenarNumeros(pointButton.text.toString())
-                this.operacionDisponible = false
-                this.puntoDisponible = false
+            if (this.pointFree) {
+                concatenateNumbers(pointButton.text.toString())
+                this.operationFree = false
+                this.pointFree = false
             }
         }
 
         //CLEAR
         clearButton.setOnClickListener {
-            limpiarEquation()
-            this.puntoDisponible = true
-            this.operacionDisponible = true
+            cleanEquation()
+            this.pointFree = true
+            this.operationFree = true
         }
 
         equalsButton.setOnClickListener {
-            if (this.operacionDisponible && this.equation.text != ""){
-                prueba()
+            if (this.operationFree && this.equation.text != ""){
+                solveEquation()
             }
-            this.puntoDisponible = true
+            this.pointFree = true
 
         }
 
@@ -175,154 +175,154 @@ class MainActivity : AppCompatActivity() {
                 this.equation.text = ""
                 return@setOnClickListener
             }
-            println("Nueva ecuación: $nuevaEcuacion")
-            println("Nueva ecuación last(): ${nuevaEcuacion.last()}")
+            val lastCharacter = nuevaEcuacion.last().toString()
             val caracterBorrado = this.equation.text[this.equation.text.length-1].toString()
-            if (caracterBorrado in this.operaciones) this.operacionDisponible = true
-            else if (caracterBorrado == ".") this.puntoDisponible = true
-            else if (nuevaEcuacion.last().toString() in this.operaciones) this.operacionDisponible = false
+            if (caracterBorrado in this.operations) this.operationFree = true
+            else if (caracterBorrado == ".") {
+                this.pointFree = true
+                this.operationFree = true
+            }
+            else if (lastCharacter in this.operations) this.operationFree = false
+            else if (lastCharacter == ".") this.operationFree = false
             this.equation.text = nuevaEcuacion
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun concatenarNumeros(digito:String){
-        this.equation.text = "${this.equation.text}${digito.lowercase()}"
-        this.operacionDisponible = true
+    private fun concatenateNumbers(digit:String){
+        this.equation.text = "${this.equation.text}${digit.lowercase()}"
+        this.operationFree = true
     }
 
-    private fun limpiarEquation(){
+    private fun cleanEquation(){
         this.equation.text = ""
         this.result.text = ""
     }
 
-    private fun prueba(){
-        var listaPrueba = this.equation.text.split("").toMutableList()
-        listaPrueba.removeAt(0)
-        listaPrueba.removeAt(listaPrueba.size - 1)
-        // Ya quedó [1, 2, 3, +, 4, 5, 6]
-        val nuevaLista = mutableListOf<String>()
-        var contador = 1
-        var numero = ""
-        for (i in listaPrueba.indices){
-            if ((listaPrueba[i] in this.operaciones) && (i != 0)){
-                nuevaLista.add(listaPrueba[i])
+    private fun solveEquation(){
+        val initialInputList = this.equation.text.split("").toMutableList()
+        initialInputList.removeAt(0)
+        initialInputList.removeAt(initialInputList.size - 1)
+        // initialInputList = [1, 2, 3, +, 4, 5, 6]
+        val initialInputParsedList = mutableListOf<String>()
+        var counter = 1
+        var number = ""
+        for (i in initialInputList.indices){
+            if ((initialInputList[i] in this.operations) && (i != 0)){
+                initialInputParsedList.add(initialInputList[i])
                 continue
             }
-            if ((i == listaPrueba.size - 1) || (listaPrueba[i + 1] in this.operaciones)){
-                for (j in i-contador+1..i){
-                    numero = "$numero${listaPrueba[j]}"
+            if ((i == initialInputList.size - 1) || (initialInputList[i + 1] in this.operations)){
+                for (j in i-counter+1..i){
+                    number = "$number${initialInputList[j]}"
                 }
-                nuevaLista.add(numero)
-                numero = ""
-                contador = 1
+                initialInputParsedList.add(number)
+                number = ""
+                counter = 1
             } else {
-                contador ++
+                counter ++
             }
         }
-        // Ya tengo la lista [123, +, 456]
-        val stack = ArrayDeque<String>()
-        val listaRes = mutableListOf<String>()
-        println("Lista antes: $nuevaLista")
-        for (i in nuevaLista.indices){
-            if (nuevaLista[i] in this.operaciones){
-                if (stack.isEmpty()){
-                    stack.add(nuevaLista[i])
+        // initialInputParsedList = [123, +, 456]
+        val operatorsStack = ArrayDeque<String>()
+        val orderedEquationList = mutableListOf<String>()
+
+        for (i in initialInputParsedList.indices){
+            if (initialInputParsedList[i] in this.operations){
+                if (operatorsStack.isEmpty()){
+                    operatorsStack.add(initialInputParsedList[i])
                 } else {
-                    val ordenNuevoOp = ordenOperador(nuevaLista[i])
-                    val ordenTope = ordenOperador(stack.last())
-                    if (ordenTope <  ordenNuevoOp){
-                        stack.add(nuevaLista[i])
+                    val orderNewOperator = operatorOrder(initialInputParsedList[i])
+                    val orderTopOperator = operatorOrder(operatorsStack.last())
+                    if (orderTopOperator <  orderNewOperator){
+                        operatorsStack.add(initialInputParsedList[i])
                     } else {
-                        ordenarOperadores(nuevaLista[i], stack, listaRes)
+                        sortOperators(initialInputParsedList[i], operatorsStack, orderedEquationList)
                     }
                 }
             } else {
-                listaRes.add(nuevaLista[i])
+                orderedEquationList.add(initialInputParsedList[i])
             }
         }
-        while (!stack.isEmpty()){
-            listaRes.add(stack.removeLast())
+        while (!operatorsStack.isEmpty()){
+            orderedEquationList.add(operatorsStack.removeLast())
         }
-        // Ya tengo [10, 2, 3, *, +]
-        println("Lista depois: $listaRes")
-        val ultimaLista = mutableListOf<String>()
-        for (i in listaRes.indices){
-            if (listaRes[i] !in this.operaciones){
-                ultimaLista.add(listaRes[i])
+        // orderedEquationList = [10, 2, 3, *, +]
+        val resultList = mutableListOf<String>()
+        for (i in orderedEquationList.indices){
+            if (orderedEquationList[i] !in this.operations){
+                resultList.add(orderedEquationList[i])
             } else {
-                val ultimaPos = ultimaLista.size - 1
-                val n1 = ultimaLista[ultimaPos - 1].toBigDecimal()
-                val n2 = ultimaLista[ultimaPos].toBigDecimal()
+                val ultimaPos = resultList.size - 1
+                val n1 = resultList[ultimaPos - 1].toBigDecimal()
+                val n2 = resultList[ultimaPos].toBigDecimal()
                 println("N1: $n1 \nN2: $n2")
-                ultimaLista[ultimaPos-1] = realizarOperacion(n1, n2, listaRes[i])
-                ultimaLista.removeAt(ultimaPos)
+                resultList[ultimaPos-1] = makeOperation(n1, n2, orderedEquationList[i])
+                resultList.removeAt(ultimaPos)
             }
         }
-        val resultado = ultimaLista[0]
-        this.result.text = resultado
+        val result = resultList[0]
+        this.result.text = result
         this.equation.text = ""
     }
 
-    private fun ordenarOperadores(nuevoOperador:String, stack:ArrayDeque<String>, listaRes:MutableList<String>){
-        var ordenOperadorTope = ordenOperador(stack.last())
-        val ordenOperadorNuevo = ordenOperador(nuevoOperador)
-        while (ordenOperadorTope >= ordenOperadorNuevo){
-            listaRes.add(stack.removeLast())
-            if (stack.isEmpty()){
-                stack.add(nuevoOperador)
+    private fun sortOperators(newOperator:String, operatorsStack:ArrayDeque<String>, listaRes:MutableList<String>){
+        var orderTopOperator = operatorOrder(operatorsStack.last())
+        val orderNewOperator = operatorOrder(newOperator)
+        while (orderTopOperator >= orderNewOperator){
+            listaRes.add(operatorsStack.removeLast())
+            if (operatorsStack.isEmpty()){
+                operatorsStack.add(newOperator)
                 return
             }
-            ordenOperadorTope = ordenOperador(stack.last())
+            orderTopOperator = operatorOrder(operatorsStack.last())
         }
-//        if (ordenOperadorTope < ordenOperadorNuevo) stack.add(nuevoOperador)
-//        if (ordenOperadorTope == ordenOperadorNuevo) listaRes.add(nuevoOperador)
     }
 
-    private fun realizarOperacion(n1:BigDecimal, n2:BigDecimal, operador:String): String {
-        lateinit var resultado: BigDecimal
+    private fun makeOperation(n1:BigDecimal, n2:BigDecimal, operador:String): String {
+        lateinit var result: BigDecimal
         when(operador) {
-            "+" -> resultado = n1.add(n2)
-            "-" -> resultado = n1.subtract(n2)
-            "x" -> resultado = n1.multiply(n2)
-            "÷" -> resultado = n1.divide(n2, 10, RoundingMode.HALF_UP)
+            "+" -> result = n1.add(n2)
+            "-" -> result = n1.subtract(n2)
+            "x" -> result = n1.multiply(n2)
+            "÷" -> result = n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
-        return removerCerosIzquierda(removerCerosDerecha(resultado.toString()))
+        return removeLeftZeros(removeRightZeros(result.toString()))
     }
 
-    private fun removerCerosIzquierda(num:String) : String{
-        val indicePunto = num.indexOf(".")
-        if (indicePunto == -1) return num
-        var contador = 0
-        for (i in 0..indicePunto){
+    private fun removeLeftZeros(num:String) : String{
+        val pointIndex = num.indexOf(".")
+        if (pointIndex == -1) return num
+        var counter = 0
+        for (i in 0..pointIndex){
             if (num[i] != '0'){
                 break
             }
-            contador = i
+            counter = i
         }
-        return num.removeRange(0 until contador)
+        return num.removeRange(0 until counter)
     }
 
-    private fun removerCerosDerecha(num:String) : String {
-        val indicePunto = num.indexOf(".")
-        if (indicePunto == -1) return num
+    private fun removeRightZeros(num:String) : String {
+        val pointIndex = num.indexOf(".")
+        if (pointIndex == -1) return num
         val len = num.length
-        var contador = 0
-        for (i in len-1 downTo indicePunto){
+        var counter = 0
+        for (i in len-1 downTo pointIndex){
             if (num[i] != '0'){
                 break
             }
-            contador++
+            counter++
         }
-        if (contador == 0) return num
-        if (num[indicePunto + 1] != '0') contador --
-        return num.removeRange(len-contador-1 until len)
+        if (counter == 0) return num
+        if (num[pointIndex + 1] != '0') counter --
+        return num.removeRange(len-counter-1 until len)
     }
 
-    private fun ordenOperador(operador: String): Int {
+    private fun operatorOrder(operator: String): Int {
 //        val orden_operadores = listOf("-", "+", "/", "x")
 //        return (orden_operadores.indexOf(operador))
-        when (operador){
+        when (operator){
             "-" -> return 0
             "+" -> return 0
             "/" -> return 1
