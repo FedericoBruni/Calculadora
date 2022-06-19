@@ -118,13 +118,12 @@ class MainActivity : AppCompatActivity() {
         val botones = mutableListOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton)
 
-//        this.operaciones = listOf(additionButton, subtractButton, multiplyButton, divideButton)
-
         val botonesOperaciones = mutableListOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
         for (boton in botonesOperaciones){
             boton.setOnClickListener {
                 if (this.operacionDisponible) {
                     if (this.equation.text == "") {
+                        if ((boton != subtractButton) && (this.result.text == "")) return@setOnClickListener
                         this.equation.text = this.result.text
                     }
                     concatenarNumeros(boton.text.toString())
@@ -172,9 +171,16 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             val nuevaEcuacion = this.equation.text.dropLast(1)
+            if (nuevaEcuacion.isEmpty()){
+                this.equation.text = ""
+                return@setOnClickListener
+            }
+            println("Nueva ecuación: $nuevaEcuacion")
+            println("Nueva ecuación last(): ${nuevaEcuacion.last()}")
             val caracterBorrado = this.equation.text[this.equation.text.length-1].toString()
             if (caracterBorrado in this.operaciones) this.operacionDisponible = true
             else if (caracterBorrado == ".") this.puntoDisponible = true
+            else if (nuevaEcuacion.last().toString() in this.operaciones) this.operacionDisponible = false
             this.equation.text = nuevaEcuacion
         }
     }
@@ -191,7 +197,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prueba(){
-        val listaPrueba = this.equation.text.split("").toMutableList()
+        var listaPrueba = this.equation.text.split("").toMutableList()
         listaPrueba.removeAt(0)
         listaPrueba.removeAt(listaPrueba.size - 1)
         // Ya quedó [1, 2, 3, +, 4, 5, 6]
