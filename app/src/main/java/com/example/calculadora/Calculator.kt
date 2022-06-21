@@ -10,6 +10,5 @@ class Calculator : Application() {
     override fun onCreate() {
         super.onCreate()
         MobileAds.initialize(this)
-
     }
 }

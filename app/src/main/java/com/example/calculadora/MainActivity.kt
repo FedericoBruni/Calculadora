@@ -1,6 +1,9 @@
 package com.example.calculadora
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -19,21 +22,22 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var equation : TextView
-    private lateinit var result : TextView
+
     private val operations = listOf("x", "÷", "+", "-")
     private var operationFree = true
     private var pointFree = true
-    private lateinit var toggle : ActionBarDrawerToggle
-
     private var count = 0
     private var interAd : InterstitialAd? = null
+    private lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var equation : TextView
+    private lateinit var result : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setListeners()
         startAds()
-        this.setViewsAndListeners()
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.nav_rate_us -> Toast.makeText(applicationContext, "Rate Us", Toast.LENGTH_SHORT).show()
+                R.id.nav_rate_us -> rateUsButtonListener()
                 R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
                 R.id.nav_other_apps -> Toast.makeText(applicationContext, "Other Apps", Toast.LENGTH_SHORT).show()
                 R.id.nav_about_us -> Toast.makeText(applicationContext, "About Us", Toast.LENGTH_SHORT).show()
@@ -53,8 +57,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //Para que cargue un inter muchas veces, habría que separar los iniciadores y llamar a startInter() cada vez que
-    //el count sea 0.
+    private fun rateUsButtonListener(){
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.android.chrome"))) //$packageName
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.android.chrome")))
+            }
+    }
+
+    /** Para que cargue un inter muchas veces, habría que separar los iniciadores y llamar a startInter() cada vez que
+        el count sea 0. */
     private fun startAds() {
         val adBanner = findViewById<AdView>(R.id.banner)
         val adRequest = AdRequest.Builder().build()
@@ -75,7 +87,7 @@ class MainActivity : AppCompatActivity() {
     // Funciona como el onClickListener para el drawer navigation bar. NO funciona si se desliza, sólo cuando se clickea.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         count ++
-        Toast.makeText(applicationContext, "Clickeaste $count veces", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Clicked $count times.", Toast.LENGTH_SHORT).show()
         checkCount()
         return toggle.onOptionsItemSelected(item)
     }
@@ -91,7 +103,68 @@ class MainActivity : AppCompatActivity() {
         interAd?.show(this)
     }
 
-    private fun setViewsAndListeners(){
+    private fun operatorOnClickListener(btn: Button, subtractButton: Button){
+        if (operationFree) {
+            if (equation.text == "") {
+                if ((btn != subtractButton) && (result.text == "")) return
+                equation.text = result.text
+            }
+            concatenateNumbers(btn.text.toString())
+            operationFree = false
+            pointFree = true
+        }
+    }
+
+    private fun numberButtonOnClickListener(btn: Button, pointButton: Button) {
+        concatenateNumbers(btn.text.toString())
+        if (btn == pointButton) {
+            operationFree = false
+        }
+    }
+
+    private fun pointButtonOnClickListener(btn: Button){
+        if (pointFree) {
+            concatenateNumbers(btn.text.toString())
+            operationFree = false
+            pointFree = false
+        }
+    }
+
+    private fun clearButtonOnClickListener(){
+        cleanEquation()
+        pointFree = true
+        operationFree = true
+    }
+
+    private fun equalsButtonOnClickListener(){
+        if (operationFree && equation.text != ""){
+            solveEquation()
+        }
+        pointFree = true
+    }
+
+    private fun deleteButtonOnClickListener(){
+        if (equation.text.isEmpty()){
+            return//@setOnClickListener
+        }
+        val nuevaEcuacion = equation.text.dropLast(1)
+        if (nuevaEcuacion.isEmpty()){
+            equation.text = ""
+            return//@setOnClickListener
+        }
+        val lastCharacter = nuevaEcuacion.last().toString()
+        val caracterBorrado = equation.text[equation.text.length-1].toString()
+        if (caracterBorrado in operations) operationFree = true
+        else if (caracterBorrado == ".") {
+            pointFree = true
+            operationFree = true
+        }
+        else if (lastCharacter in operations) operationFree = false
+        else if (lastCharacter == ".") operationFree = false
+        equation.text = nuevaEcuacion
+    }
+
+    private fun setListeners(){
         val zeroButton = findViewById<Button>(R.id.zero_button)
         val oneButton = findViewById<Button>(R.id.one_button)
         val twoButton = findViewById<Button>(R.id.two_button)
@@ -102,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         val sevenButton = findViewById<Button>(R.id.seven_button)
         val eightButton = findViewById<Button>(R.id.eight_button)
         val nineButton = findViewById<Button>(R.id.nine_button)
-
         val clearButton = findViewById<Button>(R.id.clear_button)
         val deleteButton = findViewById<Button>(R.id.delete_button)
         val equalsButton = findViewById<Button>(R.id.equals_button)
@@ -112,95 +184,36 @@ class MainActivity : AppCompatActivity() {
         val additionButton = findViewById<Button>(R.id.addition_button)
         val subtractButton = findViewById<Button>(R.id.subtract_button)
 
-        this.result = findViewById(R.id.result_view)
-        this.equation = findViewById(R.id.equation_view)
+        result = findViewById(R.id.result_view)
+        equation = findViewById(R.id.equation_view)
 
-        val buttons = listOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
+        val numberButtons = listOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton)
         val operationButtons = listOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
 
-        for (btn in operationButtons){
-            btn.setOnClickListener {
-                if (this.operationFree) {
-                    if (this.equation.text == "") {
-                        if ((btn != subtractButton) && (this.result.text == "")) return@setOnClickListener
-                        this.equation.text = this.result.text
-                    }
-                    concatenateNumbers(btn.text.toString())
-                    this.operationFree = false
-                    this.pointFree = true
-                }
-            }
-        }
-
-        for (btn in buttons){
-            btn.setOnClickListener {
-                concatenateNumbers(btn.text.toString())
-                if (btn == pointButton){
-                    this.operationFree = false
-                }
-            }
-        }
-
-        pointButton.setOnClickListener {
-            if (this.pointFree) {
-                concatenateNumbers(pointButton.text.toString())
-                this.operationFree = false
-                this.pointFree = false
-            }
-        }
-
-        //CLEAR
-        clearButton.setOnClickListener {
-            cleanEquation()
-            this.pointFree = true
-            this.operationFree = true
-        }
-
-        equalsButton.setOnClickListener {
-            if (this.operationFree && this.equation.text != ""){
-                solveEquation()
-            }
-            this.pointFree = true
-
-        }
-
-        deleteButton.setOnClickListener {
-            if (this.equation.text.isEmpty()){
-                println("ajajaj t dije!")
-                return@setOnClickListener
-            }
-            val nuevaEcuacion = this.equation.text.dropLast(1)
-            if (nuevaEcuacion.isEmpty()){
-                this.equation.text = ""
-                return@setOnClickListener
-            }
-            val lastCharacter = nuevaEcuacion.last().toString()
-            val caracterBorrado = this.equation.text[this.equation.text.length-1].toString()
-            if (caracterBorrado in this.operations) this.operationFree = true
-            else if (caracterBorrado == ".") {
-                this.pointFree = true
-                this.operationFree = true
-            }
-            else if (lastCharacter in this.operations) this.operationFree = false
-            else if (lastCharacter == ".") this.operationFree = false
-            this.equation.text = nuevaEcuacion
-        }
+        operationButtons.forEach { btn -> btn.setOnClickListener{operatorOnClickListener(btn, subtractButton)} }
+        numberButtons.forEach { btn -> btn.setOnClickListener{numberButtonOnClickListener(btn, pointButton)} }
+        pointButton.setOnClickListener { pointButtonOnClickListener(pointButton) }
+        clearButton.setOnClickListener { clearButtonOnClickListener() }
+        equalsButton.setOnClickListener { equalsButtonOnClickListener() }
+        deleteButton.setOnClickListener { deleteButtonOnClickListener() }
     }
+
+
 
     @SuppressLint("SetTextI18n")
     private fun concatenateNumbers(digit:String){
-        this.equation.text = "${this.equation.text}${digit.lowercase()}"
-        this.operationFree = true
+        equation.text = "${equation.text}${digit}"
+        operationFree = true
     }
 
     private fun cleanEquation(){
-        this.equation.text = ""
-        this.result.text = ""
+        equation.text = ""
+        result.text = ""
     }
 
     private fun solveEquation(){
-        val initialInputList = this.equation.text.split("").toMutableList()
+        val initialInputList = equation.text.split("").toMutableList()
         initialInputList.removeAt(0)
         initialInputList.removeAt(initialInputList.size - 1)
         // initialInputList = [1, 2, 3, +, 4, 5, 6]
@@ -208,11 +221,11 @@ class MainActivity : AppCompatActivity() {
         var counter = 1
         var number = ""
         for (i in initialInputList.indices){
-            if ((initialInputList[i] in this.operations) && (i != 0)){
+            if ((initialInputList[i] in operations) && (i != 0)){
                 initialInputParsedList.add(initialInputList[i])
                 continue
             }
-            if ((i == initialInputList.size - 1) || (initialInputList[i + 1] in this.operations)){
+            if ((i == initialInputList.size - 1) || (initialInputList[i + 1] in operations)){
                 for (j in i-counter+1..i){
                     number = "$number${initialInputList[j]}"
                 }
@@ -228,7 +241,7 @@ class MainActivity : AppCompatActivity() {
         val orderedEquationList = mutableListOf<String>()
 
         for (i in initialInputParsedList.indices){
-            if (initialInputParsedList[i] in this.operations){
+            if (initialInputParsedList[i] in operations){
                 if (operatorsStack.isEmpty()){
                     operatorsStack.add(initialInputParsedList[i])
                 } else {
@@ -249,28 +262,30 @@ class MainActivity : AppCompatActivity() {
         }
         // orderedEquationList = [10, 2, 3, *, +]
         val resultList = mutableListOf<String>()
+        lateinit var n1 : BigDecimal
+        lateinit var n2: BigDecimal
+        var lastPos : Int
         for (i in orderedEquationList.indices){
-            if (orderedEquationList[i] !in this.operations){
+            if (orderedEquationList[i] !in operations){
                 resultList.add(orderedEquationList[i])
             } else {
-                val ultimaPos = resultList.size - 1
-                val n1 = resultList[ultimaPos - 1].toBigDecimal()
-                val n2 = resultList[ultimaPos].toBigDecimal()
-                println("N1: $n1 \nN2: $n2")
-                resultList[ultimaPos-1] = makeOperation(n1, n2, orderedEquationList[i])
-                resultList.removeAt(ultimaPos)
+                lastPos = resultList.size - 1
+                n1 = resultList[lastPos - 1].toBigDecimal()
+                n2 = resultList[lastPos].toBigDecimal()
+                resultList[lastPos-1] = makeOperation(n1, n2, orderedEquationList[i])
+                resultList.removeAt(lastPos)
             }
         }
-        val result = resultList[0]
-        this.result.text = result
-        this.equation.text = ""
+        val res = resultList[0]
+        result.text = res
+        equation.text = ""
     }
 
-    private fun sortOperators(newOperator:String, operatorsStack:ArrayDeque<String>, listaRes:MutableList<String>){
+    private fun sortOperators(newOperator:String, operatorsStack:ArrayDeque<String>, resultList:MutableList<String>){
         var orderTopOperator = operatorOrder(operatorsStack.last())
         val orderNewOperator = operatorOrder(newOperator)
         while (orderTopOperator >= orderNewOperator){
-            listaRes.add(operatorsStack.removeLast())
+            resultList.add(operatorsStack.removeLast())
             if (operatorsStack.isEmpty()){
                 operatorsStack.add(newOperator)
                 return
@@ -279,15 +294,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeOperation(n1:BigDecimal, n2:BigDecimal, operador:String): String {
-        lateinit var result: BigDecimal
-        when(operador) {
-            "+" -> result = n1.add(n2)
-            "-" -> result = n1.subtract(n2)
-            "x" -> result = n1.multiply(n2)
-            "÷" -> result = n1.divide(n2, 10, RoundingMode.HALF_UP)
+    private fun makeOperation(n1:BigDecimal, n2:BigDecimal, operator:String): String {
+        lateinit var res: BigDecimal
+        val zeroBigDecimal = BigDecimal(0)
+        when(operator) {
+            "+" -> res = n1.add(n2)
+            "-" -> res = n1.subtract(n2)
+            "x" -> res = n1.multiply(n2)
+            "÷" -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
-        return removeLeftZeros(removeRightZeros(result.toString()))
+        return removeLeftZeros(removeRightZeros(res.toString()))
     }
 
     private fun removeLeftZeros(num:String) : String{
@@ -320,12 +336,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun operatorOrder(operator: String): Int {
-//        val orden_operadores = listOf("-", "+", "/", "x")
-//        return (orden_operadores.indexOf(operador))
         when (operator){
             "-" -> return 0
             "+" -> return 0
-            "/" -> return 1
+            "÷" -> return 1
             "x" -> return 2
         }
         return -1

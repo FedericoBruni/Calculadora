@@ -2,16 +2,21 @@
 <layer-list android:opacity="opaque"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/teal_200"></item> // color de fondo
+    <item android:drawable="@color/white"></item> // color de fondo
     <item
-        android:left="50dp"
-        android:right="50dp"
         android:top="100dp"
-        android:bottom="100dp"
-        android:gravity="center"
-        android:drawable="@drawable/ic_baseline_calculate_24">
+        android:left="20dp"
+        android:right="20dp"
+        android:bottom="200dp">
+        <bitmap android:src="@drawable/logocalcu"
+            android:gravity="center">
+        </bitmap>
+    </item>
 
-
+    <item android:drawable="@drawable/logoflott"
+        android:height="350px"
+        android:gravity="bottom"
+        android:bottom="100px">
 
     </item>
 </layer-list>
