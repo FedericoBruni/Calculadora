@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_rate_us -> rateUsButtonListener()
                 R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
                 R.id.nav_other_apps -> Toast.makeText(applicationContext, "Other Apps", Toast.LENGTH_SHORT).show()
-                R.id.nav_about_us -> Toast.makeText(applicationContext, "About Us", Toast.LENGTH_SHORT).show()
+                R.id.nav_about_us -> aboutUsButtonListener()
             }
             true
         }
@@ -63,6 +63,11 @@ class MainActivity : AppCompatActivity() {
             } catch (e: ActivityNotFoundException) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.android.chrome")))
             }
+    }
+
+    private fun aboutUsButtonListener(){
+        var dialog = PrivacyPolicyDialogFragment()
+        dialog.show(supportFragmentManager, "custom dialog")
     }
 
     /** Para que cargue un inter muchas veces, habría que separar los iniciadores y llamar a startInter() cada vez que

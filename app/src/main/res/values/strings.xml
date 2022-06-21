@@ -2,4 +2,53 @@
     <string name="app_name">Calculadora</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <string name="t1_privacy_policy">Privacy Policy</string>
+    <string name="t2">What kind of information do we collect?</string>
+    <string name="t3">What do we do with the data we collect?</string>
+
+    <string name="st1">Location</string>
+    <string name="st2">Registration Data</string>
+    <string name="st3">Cookies</string>
+    <string name="st4">Service Providers</string>
+    <string name="st5">Security</string>
+    <string name="st6">Links to other sites</string>
+    <string name="st7">Children\'s Privacy</string>
+    <string name="st8">Data collected by us</string>
+    <string name="st9">Data collected by third parties</string>
+
+    <string name="p1">This privacy policy applies to all mobile applications for Android created by <b>flottaps</b> and published in the developer account with the name mentioned above.</string>
+    <string name="p2">For the proper functioning of the applications we build or develop, these are some of the data we collect:</string>
+    <string name="p3">In the case of applications that are necessary we access the data provided by the GPS. These data are not handled by us, they are directly managed by Google Maps (our map provider).</string>
+    <string name="p4">I want to inform you that every time you use my Service, in case of an application error, I collect data and information (through third-party products) on your phone called Registration Data. This registration data may include information such as the Internet Protocol («IP») address of your device, the name of the device, the version of the operating system, the application settings when using my Service, the time and date of Use of the Service and other statistics.</string>
+    <string name="p5">Cookies are files with a small amount of data that are commonly used as unique anonymous identifiers. These are sent to your browser from the websites you visit and stored in the internal memory of your device.
+This service does not use these cookies explicitly. However, the application may use third-party code and libraries that use cookies to collect information and improve its services. You have the option of accepting or rejecting these cookies and knowing when a cookie is sent to your device. If you choose to decline our cookies, you may not be able to use some parts of this Service.
+</string>
+    <string name="p6">I can employ third party companies and individuals due to the following reasons:\n\n
+            \t\t\u2022 To facilitate our service;\n
+            \t\t\u2022 To provide the Service on our behalf;\n
+            \t\t\u2022 To perform services related to the Service; or\n
+            \t\t\u2022 To help us analyze how our Service is used.\n\n
+            I wish to inform the users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are required not to disclose or use the information for any other purpose.
+</string>
+    <string name="p7">I value your confidence in providing us with your personal information, therefore, we strive to use commercially acceptable means to protect it. But remember that no method of transmission over the Internet or method of electronic storage is 100% safe and reliable, and I cannot guarantee its absolute security.</string>
+    <string name="p8">This service may contain links to other sites. If you click on a link from a third party, you will be directed to that site. Note that these external sites are not operated by me. Therefore, I recommend that you review the Privacy Policy of these websites. I have no control or assume any responsibility for the content, privacy policies or practices of third-party sites or services.</string>
+    <string name="p9">These Services are not directed to any person under 13 years old. I do not knowingly collect personally identifiable information from children under 13. In the event that I discover that a child under 13 has provided me with personal information, I immediately delete it from our servers. If you are a parent or guardian and know that your child has provided us with personal information, contact me so I can take the necessary actions.</string>
+    <string name="p10">The data collected are of two types:\n\n
+            \t\t\u2022 Data collected by us.\n
+            \t\t\u2022 Data collected by third parties.\n
+</string>
+    <string name="p11">This data is collected to obtain feedback on what our users want and thus be able to improve by providing the correct improvements in each update.
+The data is manipulated at the code level, then processed in large quantities, but at no time do we access data from a particular user, as they are encrypted and only the user who owns the information can access them.
+</string>
+    <string name="p12">
+        In the data collected by third parties are:\n\n
+        \t\t\u2022 <a href="https://play.google.com/store/apps/details?id=com.android.chrome">Google Play</a>\n
+            \t\t\u2022 Google Analytics\n
+            \t\t\u2022 Google Admob\n
+            \t\t\u2022 Firebase\n
+    </string>
+
+
+
 </resources>
