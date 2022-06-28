@@ -9,7 +9,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startMainActivity()
+        //startMainActivity()
     }
 
     private fun startMainActivity() {
