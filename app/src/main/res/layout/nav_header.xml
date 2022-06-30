@@ -2,41 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:background="@drawable/calculator_nav_header"
+    android:background="@color/black"
     android:orientation="vertical">
-
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ic_baseline_calculate_24">
-
-    </de.hdodenhof.circleimageview.CircleImageView>
-
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingLeft="30dp"
-        android:text="Simple Calculator"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold">
-
-    </TextView>
-
+        android:src="@drawable/logocalcu"
+        android:layout_gravity="center">
+    </ImageView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hasbullah@fi.uba.ar"
+        android:text="flottapps@gmail.com"
         android:textColor="@color/white"
-        android:paddingTop="4dp"
-        android:paddingLeft="30dp"
-        android:textSize="16dp">
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:textSize="18dp">
 
     </TextView>
-
-
 </LinearLayout>

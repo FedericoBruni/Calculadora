@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/round_corner_top">
     <LinearLayout
@@ -22,10 +22,9 @@
         </TextView>
     </LinearLayout>
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_marginBottom="50dp">
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@color/white">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,6 +85,7 @@
                 android:textSize="25sp"
                 android:textStyle="bold">
             </TextView>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,25 +216,18 @@
                 android:linksClickable="true">
             </TextView>
         </LinearLayout>
+
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/accept_pp_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="6dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:textSize="17sp"
-            android:textStyle="bold">
-
-        </TextView>
-    </LinearLayout>
-
+        android:text="Accept"
+        android:textSize="20dp"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/black"
+        android:textColor="#3366BB">
+    </Button>
 </LinearLayout>
 
