@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -22,6 +23,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
+import kotlin.time.measureTime
 
 
 class MainActivity : AppCompatActivity() {
@@ -131,11 +133,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun numberButtonOnClickListener(btn: Button, pointButton: Button) {
-        concatenateNumbers(btn.text.toString())
-        if (btn == pointButton) {
-            operationFree = false
+    private fun numberButtonOnClickListener(btn: Button, zeroButton: Button) {
+        if (btn == zeroButton) {
+            if (equation.text.isEmpty()) return
         }
+        concatenateNumbers(btn.text.toString())
     }
 
     private fun pointButtonOnClickListener(btn: Button){
@@ -232,11 +234,15 @@ class MainActivity : AppCompatActivity() {
         val operationButtons = listOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
 
         operationButtons.forEach { btn -> btn.setOnClickListener{operatorOnClickListener(btn, subtractButton)} }
-        numberButtons.forEach { btn -> btn.setOnClickListener{numberButtonOnClickListener(btn, pointButton)} }
+        numberButtons.forEach { btn -> btn.setOnClickListener{numberButtonOnClickListener(btn, zeroButton)} }
         pointButton.setOnClickListener { pointButtonOnClickListener(pointButton) }
         clearButton.setOnClickListener { clearButtonOnClickListener() }
         equalsButton.setOnClickListener { equalsButtonOnClickListener() }
         deleteButton.setOnClickListener { deleteButtonOnClickListener() }
+        deleteButton.setOnLongClickListener {
+            clearButtonOnClickListener()
+            return@setOnLongClickListener true
+        }
     }
 
     @SuppressLint("SetTextI18n")
