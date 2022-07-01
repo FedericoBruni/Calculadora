@@ -207,13 +207,47 @@
                 android:textStyle="bold">
             </TextView>
             <TextView
-                android:id="@+id/textLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p12"
                 android:textSize="20sp"
+                android:layout_marginTop="20dp">
+            </TextView>
+            <TextView
+                android:id="@+id/tv_google_play_PP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/google_play_PP"
+                android:textSize="20sp"
                 android:layout_marginTop="20dp"
-                android:linksClickable="true">
+                android:textColorLink="#0000EE">
+            </TextView>
+            <TextView
+                android:id="@+id/tv_google_analytics_PP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/google_analytics_PP"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp"
+                android:textColorLink="#0000EE">
+            </TextView>
+            <TextView
+                android:id="@+id/tv_google_admob_PP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/google_admob_PP"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp"
+                android:textColorLink="#0000EE">
+            </TextView>
+            <TextView
+                android:id="@+id/tv_firebase_PP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/firebase_PP"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp"
+                android:textColorLink="#0000EE">
             </TextView>
         </LinearLayout>
 

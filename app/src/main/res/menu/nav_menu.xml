@@ -31,7 +31,5 @@
                 android:icon="@drawable/ic_baseline_info_24">
             </item>
         </menu>
-
     </item>
-
 </menu>

@@ -154,9 +154,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun equalsButtonOnClickListener(){
         if (operationFree && equation.text != ""){
+            checkPoint()
             solveEquation()
         }
         pointFree = true
+
     }
 
     private fun deleteButtonOnClickListener(){
@@ -170,16 +172,38 @@ class MainActivity : AppCompatActivity() {
         }
         val lastCharacter = nuevaEcuacion.last().toString()
         val caracterBorrado = equation.text[equation.text.length-1].toString()
-        if (caracterBorrado in operations) operationFree = true
+        if (caracterBorrado in operations) {
+            operationFree = true
+            if (checkPoint()) pointFree = false
+        }
+
         else if (caracterBorrado == ".") {
             pointFree = true
             operationFree = true
+            Toast.makeText(this, "juju 2", Toast.LENGTH_SHORT).show()
         }
-        else if (lastCharacter in operations) operationFree = false
-        else if (lastCharacter == ".") operationFree = false
+        else if (lastCharacter in operations) {
+            operationFree = false
+            Toast.makeText(this, "juju 3", Toast.LENGTH_SHORT).show()
+        }
+        else if (lastCharacter == ".") {
+            operationFree = false
+            Toast.makeText(this, "juju 4", Toast.LENGTH_SHORT).show()
+        }
         equation.text = nuevaEcuacion
     }
 
+    private fun checkPoint() : Boolean{
+        val len = equation.text.length
+        var c = 0
+        for (i in len-1 downTo 0){
+            if (equation.text[i].toString() in operations){
+                c = i
+            }
+        }
+        if (c == 0) c = len
+        return (equation.text.subSequence(len-c, len-1).contains('.'))
+    }
     private fun setListeners(){
         val zeroButton = findViewById<Button>(R.id.zero_button)
         val oneButton = findViewById<Button>(R.id.one_button)
@@ -214,8 +238,6 @@ class MainActivity : AppCompatActivity() {
         equalsButton.setOnClickListener { equalsButtonOnClickListener() }
         deleteButton.setOnClickListener { deleteButtonOnClickListener() }
     }
-
-
 
     @SuppressLint("SetTextI18n")
     private fun concatenateNumbers(digit:String){

@@ -1,20 +1,17 @@
 package com.example.calculadora
 
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import com.google.android.material.navigation.NavigationView
 
 class PrivacyPolicyDialogFragment: DialogFragment() {
 
@@ -35,10 +32,33 @@ class PrivacyPolicyDialogFragment: DialogFragment() {
             //val height = ViewGroup.LayoutParams.MATCH_PARENT
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             //dialog.getWindow()?.setLayout(width, height)
-            val acceptButton = dialog.findViewById<Button>(R.id.accept_pp_btn)
-            acceptButton.setOnClickListener{
-                dialog.dismiss()
-            }
+            setListeners(dialog)
+        }
+    }
+
+    private fun setListeners(dialog: Dialog) {
+        val acceptButton = dialog.findViewById<Button>(R.id.accept_pp_btn)
+        acceptButton.setOnClickListener{
+            dialog.dismiss()
+        }
+        val googlePlayPP = dialog.findViewById<TextView>(R.id.tv_google_play_PP)
+        googlePlayPP.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://policies.google.com/privacy")))
+        }
+
+        val googleAnalyticsPP = dialog.findViewById<TextView>(R.id.tv_google_analytics_PP)
+        googleAnalyticsPP.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://support.google.com/analytics/answer/6004245?hl=en")))
+        }
+
+        val googleAdmobPP = dialog.findViewById<TextView>(R.id.tv_google_admob_PP)
+        googleAdmobPP.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://support.google.com/admob/answer/6128543?hl=en")))
+        }
+
+        val firebasePP = dialog.findViewById<TextView>(R.id.tv_firebase_PP)
+        firebasePP.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://firebase.google.com/support/privacy/?hl=es-419")))
         }
     }
 }
