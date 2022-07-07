@@ -3,6 +3,7 @@ package com.example.calculadora
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.media.effect.Effect
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
@@ -28,7 +29,7 @@ import kotlin.time.measureTime
 
 class MainActivity : AppCompatActivity() {
 
-    private val operations = listOf("x", "÷", "+", "-")
+    private val operations = listOf("×", "÷", "+", "−")
     private var operationFree = true
     private var pointFree = true
     private var count = 0
@@ -55,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.nav_rate_us -> rateUsButtonListener()
                 R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
-                R.id.nav_other_apps -> Toast.makeText(applicationContext, "Other Apps", Toast.LENGTH_SHORT).show()
                 R.id.nav_about_us -> aboutUsButtonListener()
             }
             true
@@ -160,7 +160,6 @@ class MainActivity : AppCompatActivity() {
             solveEquation()
         }
         pointFree = true
-
     }
 
     private fun deleteButtonOnClickListener(){
@@ -184,7 +183,7 @@ class MainActivity : AppCompatActivity() {
             operationFree = true
             Toast.makeText(this, "juju 2", Toast.LENGTH_SHORT).show()
         }
-        else if (lastCharacter in operations) {
+        if (lastCharacter in operations) {
             operationFree = false
             Toast.makeText(this, "juju 3", Toast.LENGTH_SHORT).show()
         }
@@ -343,8 +342,8 @@ class MainActivity : AppCompatActivity() {
         val zeroBigDecimal = BigDecimal(0)
         when(operator) {
             "+" -> res = n1.add(n2)
-            "-" -> res = n1.subtract(n2)
-            "x" -> res = n1.multiply(n2)
+            "−" -> res = n1.subtract(n2)
+            "×" -> res = n1.multiply(n2)
             "÷" -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
         return removeLeftZeros(removeRightZeros(res.toString()))
@@ -381,10 +380,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun operatorOrder(operator: String): Int {
         when (operator){
-            "-" -> return 0
+            "−" -> return 0
             "+" -> return 0
             "÷" -> return 1
-            "x" -> return 2
+            "×" -> return 2
         }
         return -1
     }

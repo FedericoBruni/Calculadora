@@ -19,15 +19,9 @@
                 android:title="Share"
                 android:icon="@drawable/ic_baseline_share_24">
             </item>
-
-            <item
-                android:id="@+id/nav_other_apps"
-                android:title="Other Apps"
-                android:icon="@drawable/ic_baseline_more_24">
-            </item>
             <item
                 android:id="@+id/nav_about_us"
-                android:title="About Us"
+                android:title="Privacy Policy"
                 android:icon="@drawable/ic_baseline_info_24">
             </item>
         </menu>
