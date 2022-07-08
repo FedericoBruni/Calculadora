@@ -2,10 +2,13 @@ package com.example.calculadora
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.media.effect.Effect
 import android.net.Uri
-import android.os.Bundle
+import android.os.*
+import android.provider.MediaStore
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -38,10 +41,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var equation : TextView
     private lateinit var result : TextView
     private lateinit var drawerLayout : DrawerLayout
+    private lateinit var mediaPlayer : MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mediaPlayer = MediaPlayer.create(this, R.raw.button_sound);
         setListeners()
         startAds()
 
@@ -61,13 +65,38 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+    fun vibrate(){
+        val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vib.vibrate(VibrationEffect.createOneShot(55, VibrationEffect.DEFAULT_AMPLITUDE) )
+        }else{
+            @Suppress("DEPRECATION")
+            vib.vibrate(55)
+        }
+    }
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
             drawerLayout.closeDrawer(Gravity.LEFT)
         } else {
             super.onBackPressed()
         }
+
+//        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+//        if (vibrator.hasVibrator()) { // Vibrator availability checking
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)) // New vibrate method for API Level 26 or higher
+//            } else {
+//                vibrator.vibrate(500) // Vibrate method for below API Level 26
+//            }
+//        }
     }
 
     private fun rateUsButtonListener(){
@@ -138,6 +167,8 @@ class MainActivity : AppCompatActivity() {
             if (equation.text.isEmpty()) return
         }
         concatenateNumbers(btn.text.toString())
+        vibrate()
+        mediaPlayer.start()
     }
 
     private fun pointButtonOnClickListener(btn: Button){

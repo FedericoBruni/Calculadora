@@ -16,9 +16,10 @@
         android:layout_height="wrap_content"
         android:text="flottapps@gmail.com"
         android:textColor="@color/white"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:textSize="18dp">
+        android:textSize="18dp"
+        android:textStyle="bold">
 
     </TextView>
 </LinearLayout>

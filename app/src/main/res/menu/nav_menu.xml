@@ -10,9 +10,9 @@
         <menu>
             <item
                 android:id="@+id/nav_rate_us"
-                android:checkable="false"
                 android:icon="@drawable/ic_baseline_rate_review_24"
-                android:title="Rate Us">
+                android:title="Rate Us"
+                >
             </item>
             <item
                 android:id="@+id/nav_share"
@@ -23,6 +23,27 @@
                 android:id="@+id/nav_about_us"
                 android:title="Privacy Policy"
                 android:icon="@drawable/ic_baseline_info_24">
+            </item>
+        </menu>
+    </item>
+
+    <item android:title="Functions">
+        <menu
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+            <item
+                android:id="@+id/vibrate"
+                android:title="Vibration"
+                android:icon="@drawable/ic_baseline_vibration_24"
+                app:actionLayout="@layout/widgets">
+
+            </item>
+
+            <item
+                android:id="@+id/sound"
+                android:title="Sound"
+                android:icon="@drawable/ic_baseline_volume_up_24"
+                app:actionLayout="@layout/widgets">
+
             </item>
         </menu>
     </item>
