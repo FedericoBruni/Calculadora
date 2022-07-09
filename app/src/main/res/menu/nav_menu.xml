@@ -34,7 +34,7 @@
                 android:id="@+id/vibrate"
                 android:title="Vibration"
                 android:icon="@drawable/ic_baseline_vibration_24"
-                app:actionLayout="@layout/widgets">
+                app:actionViewClass="androidx.appcompat.widget.SwitchCompat">
 
             </item>
 
@@ -42,7 +42,7 @@
                 android:id="@+id/sound"
                 android:title="Sound"
                 android:icon="@drawable/ic_baseline_volume_up_24"
-                app:actionLayout="@layout/widgets">
+                app:actionViewClass="androidx.appcompat.widget.SwitchCompat">
 
             </item>
         </menu>

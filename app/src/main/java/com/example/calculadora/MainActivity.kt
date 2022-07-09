@@ -5,19 +5,13 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import android.media.effect.Effect
 import android.net.Uri
 import android.os.*
-import android.provider.MediaStore
 import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
+import androidx.appcompat.widget.SwitchCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -27,25 +21,29 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.time.measureTime
-
 
 class MainActivity : AppCompatActivity() {
-
-    private val operations = listOf("×", "÷", "+", "−")
+    val ADDITION = "+"
+    val SUBTRACT = "-" //−
+    val MULTIPLY = "×"
+    val DIVISION = "÷"
+    private val operations = listOf("×", "÷", "+", "-")
     private var operationFree = true
     private var pointFree = true
     private var count = 0
     private var interAd : InterstitialAd? = null
+    private var vibration = false
+    private var sound = false
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var equation : TextView
     private lateinit var result : TextView
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var mediaPlayer : MediaPlayer
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mediaPlayer = MediaPlayer.create(this, R.raw.button_sound);
+        mediaPlayer = MediaPlayer.create(this, R.raw.button_sound)
         setListeners()
         startAds()
 
@@ -56,16 +54,42 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         navView.setNavigationItemSelectedListener {
-            when(it.itemId){
+            when(it.itemId) {
                 R.id.nav_rate_us -> rateUsButtonListener()
                 R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
                 R.id.nav_about_us -> aboutUsButtonListener()
             }
             true
         }
+        setNavigationDrawerSwitchListeners(navView)
+
     }
-    fun vibrate(){
+
+    private fun setNavigationDrawerSwitchListeners(navView: NavigationView) {
+        val soundItem = navView.menu.findItem(R.id.sound)
+        val soundSwitch = soundItem.actionView as SwitchCompat
+        soundSwitch.isChecked = false
+        val vibrationItem = navView.menu.findItem(R.id.vibrate)
+        val vibrationSwitch = vibrationItem.actionView as SwitchCompat
+        vibrationSwitch.isChecked = false
+        soundSwitch.setOnClickListener { setSwitchListener(soundSwitch, "sound") }
+        vibrationSwitch.setOnClickListener { setSwitchListener(vibrationSwitch, "vibration") }
+    }
+
+
+    private fun setSwitchListener(switch: SwitchCompat, feature: String){
+        if (feature == "vibration") vibration = switch.isChecked else sound = switch.isChecked
+        Toast.makeText(applicationContext, "Vibration: $vibration\nSound: $sound", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun vibrateSound(){
+        if (vibration) vibrate()
+        if (sound) mediaPlayer.start()
+    }
+
+    private fun vibrate(){
         val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
                 getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
@@ -88,15 +112,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-
-//        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-//        if (vibrator.hasVibrator()) { // Vibrator availability checking
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)) // New vibrate method for API Level 26 or higher
-//            } else {
-//                vibrator.vibrate(500) // Vibrate method for below API Level 26
-//            }
-//        }
     }
 
     private fun rateUsButtonListener(){
@@ -132,12 +147,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Funciona como el onClickListener para el drawer navigation bar. NO funciona si se desliza, sólo cuando se clickea.
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        count ++
-        Toast.makeText(applicationContext, "Clicked $count times.", Toast.LENGTH_SHORT).show()
-        checkCount()
-        return toggle.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        count ++
+//        Toast.makeText(applicationContext, "Clicked $count times.", Toast.LENGTH_SHORT).show()
+//        checkCount()
+//        return toggle.onOptionsItemSelected(item)
+//    }
 
     private fun checkCount() {
         if (count == 5){
@@ -151,6 +166,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun operatorOnClickListener(btn: Button, subtractButton: Button){
+        vibrateSound()
         if (operationFree) {
             if (equation.text == "") {
                 if ((btn != subtractButton) && (result.text == "")) return
@@ -160,40 +176,48 @@ class MainActivity : AppCompatActivity() {
             operationFree = false
             pointFree = true
         }
+
     }
 
     private fun numberButtonOnClickListener(btn: Button, zeroButton: Button) {
+        vibrateSound()
         if (btn == zeroButton) {
             if (equation.text.isEmpty()) return
         }
         concatenateNumbers(btn.text.toString())
-        vibrate()
-        mediaPlayer.start()
+
     }
 
     private fun pointButtonOnClickListener(btn: Button){
+        vibrateSound()
         if (pointFree) {
             concatenateNumbers(btn.text.toString())
             operationFree = false
             pointFree = false
         }
+
     }
 
     private fun clearButtonOnClickListener(){
+        vibrateSound()
         cleanEquation()
         pointFree = true
         operationFree = true
+
     }
 
     private fun equalsButtonOnClickListener(){
+        vibrateSound()
         if (operationFree && equation.text != ""){
             checkPoint()
             solveEquation()
         }
         pointFree = true
+
     }
 
     private fun deleteButtonOnClickListener(){
+        vibrateSound()
         if (equation.text.isEmpty()){
             return//@setOnClickListener
         }
@@ -223,6 +247,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "juju 4", Toast.LENGTH_SHORT).show()
         }
         equation.text = nuevaEcuacion
+
     }
 
     private fun checkPoint() : Boolean{
@@ -372,10 +397,10 @@ class MainActivity : AppCompatActivity() {
         lateinit var res: BigDecimal
         val zeroBigDecimal = BigDecimal(0)
         when(operator) {
-            "+" -> res = n1.add(n2)
-            "−" -> res = n1.subtract(n2)
-            "×" -> res = n1.multiply(n2)
-            "÷" -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
+            ADDITION -> res = n1.add(n2)
+            SUBTRACT -> res = n1.subtract(n2)
+            MULTIPLY -> res = n1.multiply(n2)
+            DIVISION -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
         return removeLeftZeros(removeRightZeros(res.toString()))
     }
@@ -411,10 +436,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun operatorOrder(operator: String): Int {
         when (operator){
-            "−" -> return 0
-            "+" -> return 0
-            "÷" -> return 1
-            "×" -> return 2
+            SUBTRACT -> return 0
+            ADDITION -> return 0
+            DIVISION -> return 1
+            MULTIPLY -> return 2
         }
         return -1
     }
