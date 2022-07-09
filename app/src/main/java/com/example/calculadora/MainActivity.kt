@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.calculadora.Calculator.Companion.prefs
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
@@ -32,8 +33,8 @@ class MainActivity : AppCompatActivity() {
     private var pointFree = true
     private var count = 0
     private var interAd : InterstitialAd? = null
-    private var vibration = false
-    private var sound = false
+    private var vibration = prefs.getVibrationConfig()
+    private var sound = prefs.getSoundConfig()
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var equation : TextView
     private lateinit var result : TextView
@@ -70,17 +71,23 @@ class MainActivity : AppCompatActivity() {
     private fun setNavigationDrawerSwitchListeners(navView: NavigationView) {
         val soundItem = navView.menu.findItem(R.id.sound)
         val soundSwitch = soundItem.actionView as SwitchCompat
-        soundSwitch.isChecked = false
+        soundSwitch.isChecked = sound
         val vibrationItem = navView.menu.findItem(R.id.vibrate)
         val vibrationSwitch = vibrationItem.actionView as SwitchCompat
-        vibrationSwitch.isChecked = false
+        vibrationSwitch.isChecked = vibration
         soundSwitch.setOnClickListener { setSwitchListener(soundSwitch, "sound") }
         vibrationSwitch.setOnClickListener { setSwitchListener(vibrationSwitch, "vibration") }
     }
 
 
     private fun setSwitchListener(switch: SwitchCompat, feature: String){
-        if (feature == "vibration") vibration = switch.isChecked else sound = switch.isChecked
+        if (feature == "vibration") {
+            vibration = switch.isChecked
+            prefs.saveVibrationConfig(vibration)
+        } else {
+            sound = switch.isChecked
+            prefs.saveSoundConfig(sound)
+        }
         Toast.makeText(applicationContext, "Vibration: $vibration\nSound: $sound", Toast.LENGTH_SHORT).show()
     }
 
