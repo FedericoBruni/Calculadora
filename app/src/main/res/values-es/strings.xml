@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Calculator</string>
+    <string name="app_name">Calculadora</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
 
@@ -59,14 +60,13 @@ The data is manipulated at the code level, then processed in large quantities, b
         \t\t\u2022 <a href="https://firebase.google.com/support/privacy/?hl=es-419">Firebase</a>
     </string>
 
-    <string name="communicate">Communicate</string>
-    <string name="rate_us">Rate Us</string>
-    <string name="share">Share</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="communicate">Comunicarse</string>
+    <string name="rate_us">Califícanos</string>
+    <string name="share">Comparte</string>
+    <string name="privacy_policy">Política de Privacidad</string>
 
-    <string name="functions">Functions</string>
-    <string name="vibration">Vibration</string>
-    <string name="sound">Sound</string>
-    <string name="language">Language</string>
-
+    <string name="functions">Funciones</string>
+    <string name="vibration">Vibración</string>
+    <string name="sound">Sonido</string>
+    <string name="language">Idioma</string>
 </resources>

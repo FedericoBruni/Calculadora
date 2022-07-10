@@ -6,33 +6,33 @@
 
 
 
-    <item android:title="Communicate">
+    <item android:title="@string/communicate">
         <menu>
             <item
                 android:id="@+id/nav_rate_us"
                 android:icon="@drawable/ic_baseline_rate_review_24"
-                android:title="Rate Us"
+                android:title="@string/rate_us"
                 >
             </item>
             <item
                 android:id="@+id/nav_share"
-                android:title="Share"
+                android:title="@string/share"
                 android:icon="@drawable/ic_baseline_share_24">
             </item>
             <item
                 android:id="@+id/nav_about_us"
-                android:title="Privacy Policy"
+                android:title="@string/privacy_policy"
                 android:icon="@drawable/ic_baseline_info_24">
             </item>
         </menu>
     </item>
 
-    <item android:title="Functions">
+    <item android:title="@string/functions">
         <menu
             xmlns:app="http://schemas.android.com/apk/res-auto">
             <item
                 android:id="@+id/vibrate"
-                android:title="Vibration"
+                android:title="@string/vibration"
                 android:icon="@drawable/ic_baseline_vibration_24"
                 app:actionViewClass="androidx.appcompat.widget.SwitchCompat">
 
@@ -40,9 +40,17 @@
 
             <item
                 android:id="@+id/sound"
-                android:title="Sound"
+                android:title="@string/sound"
                 android:icon="@drawable/ic_baseline_volume_up_24"
                 app:actionViewClass="androidx.appcompat.widget.SwitchCompat">
+
+            </item>
+
+            <item
+                android:id="@+id/language"
+                android:title="@string/language"
+                android:icon="@drawable/ic_baseline_language_24"
+                app:actionViewClass="android.widget.TextView">
 
             </item>
         </menu>

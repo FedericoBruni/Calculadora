@@ -3,15 +3,21 @@ package com.example.calculadora
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
+import android.provider.MediaStore
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.calculadora.Calculator.Companion.prefs
 import com.google.android.gms.ads.AdRequest
@@ -22,6 +28,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.util.*
+import kotlin.collections.ArrayDeque
 
 class MainActivity : AppCompatActivity() {
     val ADDITION = "+"
@@ -43,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadLocate()
         setContentView(R.layout.activity_main)
         mediaPlayer = MediaPlayer.create(this, R.raw.button_sound)
         setListeners()
@@ -61,11 +70,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_rate_us -> rateUsButtonListener()
                 R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
                 R.id.nav_about_us -> aboutUsButtonListener()
+                R.id.language -> languageButtonListener()
             }
             true
         }
         setNavigationDrawerSwitchListeners(navView)
 
+    }
+
+    private fun loadLocate() {
+        val language = prefs.getLanguageConfig()
+        setLocate(language)
     }
 
     private fun setNavigationDrawerSwitchListeners(navView: NavigationView) {
@@ -132,6 +147,42 @@ class MainActivity : AppCompatActivity() {
     private fun aboutUsButtonListener(){
         var dialog = PrivacyPolicyDialogFragment()
         dialog.show(supportFragmentManager, "custom dialog")
+    }
+
+    private fun languageButtonListener(){
+//        var dialog = LanguageDialogFragment()
+//        dialog.on(baseContext)
+//        dialog.act(this)
+//        dialog.show(supportFragmentManager, "custom dialog")
+        //lateinit var dialog: AlertDialog
+        val listLanguages = arrayOf("Spanish", "English")
+        val mBuilder = AlertDialog.Builder(this)
+//        mBuilder.setItems(listLanguages) { _, which ->
+//            Toast.makeText(this@MainActivity, listLanguages[which], Toast.LENGTH_SHORT).show()
+//        }
+        mBuilder.setSingleChoiceItems(listLanguages,-1) { dialog, which ->
+            if (which == 0){
+                setLocate("es")
+
+            } else if (which == 1){
+                setLocate("en")
+
+            }
+            dialog.dismiss()
+            recreate()
+        }
+        // builder.create().show();
+        val mDialog = mBuilder.create()
+        mDialog.show()
+    }
+
+    private fun setLocate(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+        prefs.saveLanguageConfig(language)
     }
 
     /** Para que cargue un inter muchas veces, habría que separar los iniciadores y llamar a startInter() cada vez que
