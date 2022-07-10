@@ -47,6 +47,14 @@
             </item>
 
             <item
+                android:id="@+id/reading"
+                android:title="@string/reading"
+                android:icon="@drawable/ic_baseline_keyboard_voice_24"
+                app:actionViewClass="androidx.appcompat.widget.SwitchCompat">
+
+            </item>
+
+            <item
                 android:id="@+id/language"
                 android:title="@string/language"
                 android:icon="@drawable/ic_baseline_language_24"

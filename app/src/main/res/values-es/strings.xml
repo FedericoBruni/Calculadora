@@ -68,5 +68,6 @@ The data is manipulated at the code level, then processed in large quantities, b
     <string name="functions">Funciones</string>
     <string name="vibration">Vibración</string>
     <string name="sound">Sonido</string>
+    <string name="reading">Lectura</string>
     <string name="language">Idioma</string>
 </resources>

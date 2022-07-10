@@ -10,6 +10,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
+import android.speech.tts.TextToSpeech
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -31,7 +32,7 @@ import java.math.RoundingMode
 import java.util.*
 import kotlin.collections.ArrayDeque
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     val ADDITION = "+"
     val SUBTRACT = "-" //−
     val MULTIPLY = "×"
@@ -43,16 +44,24 @@ class MainActivity : AppCompatActivity() {
     private var interAd : InterstitialAd? = null
     private var vibration = prefs.getVibrationConfig()
     private var sound = prefs.getSoundConfig()
+    private var reading = prefs.getReadingConfig()
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var equation : TextView
     private lateinit var result : TextView
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var mediaPlayer : MediaPlayer
+    private lateinit var tts : TextToSpeech
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadLocate()
         setContentView(R.layout.activity_main)
+//        tts = TextToSpeech(applicationContext, TextToSpeech.OnInitListener { status ->
+//            if (status != TextToSpeech.ERROR) {
+//                tts.language = Locale.getDefault()
+//            }
+//        })
+        tts = TextToSpeech(this, this)
         mediaPlayer = MediaPlayer.create(this, R.raw.button_sound)
         setListeners()
         startAds()
@@ -77,7 +86,21 @@ class MainActivity : AppCompatActivity() {
         setNavigationDrawerSwitchListeners(navView)
 
     }
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts!!.setLanguage(Locale.getDefault())
+        }
+    }
 
+    public override fun onDestroy() {
+        // Shutdown TTS when
+        // activity is destroyed
+        if (tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+        super.onDestroy()
+    }
     private fun loadLocate() {
         val language = prefs.getLanguageConfig()
         setLocate(language)
@@ -87,11 +110,22 @@ class MainActivity : AppCompatActivity() {
         val soundItem = navView.menu.findItem(R.id.sound)
         val soundSwitch = soundItem.actionView as SwitchCompat
         soundSwitch.isChecked = sound
+
         val vibrationItem = navView.menu.findItem(R.id.vibrate)
         val vibrationSwitch = vibrationItem.actionView as SwitchCompat
         vibrationSwitch.isChecked = vibration
+
+        val readingItem = navView.menu.findItem(R.id.reading)
+        val readingSwitch = readingItem.actionView as SwitchCompat
+        readingSwitch.isChecked = reading
+
         soundSwitch.setOnClickListener { setSwitchListener(soundSwitch, "sound") }
         vibrationSwitch.setOnClickListener { setSwitchListener(vibrationSwitch, "vibration") }
+
+        readingSwitch.setOnClickListener {
+            reading = readingSwitch.isChecked
+            prefs.saveReadingConfig(reading)
+        }
     }
 
 
@@ -103,12 +137,18 @@ class MainActivity : AppCompatActivity() {
             sound = switch.isChecked
             prefs.saveSoundConfig(sound)
         }
-        Toast.makeText(applicationContext, "Vibration: $vibration\nSound: $sound", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Vibration: $vibration\nSound: $sound\nReading: $reading", Toast.LENGTH_SHORT).show()
     }
 
+    private fun read(string: String){
+        if (reading){
+            tts.speak(string, TextToSpeech.QUEUE_FLUSH, null, "")
+        }
+    }
     private fun vibrateSound(){
         if (vibration) vibrate()
         if (sound) mediaPlayer.start()
+
     }
 
     private fun vibrate(){
@@ -228,6 +268,9 @@ class MainActivity : AppCompatActivity() {
         if (operationFree) {
             if (equation.text == "") {
                 if ((btn != subtractButton) && (result.text == "")) return
+//                if (btn == subtractButton && result.text == ""){
+//                    result.text = "-"
+//                }
                 equation.text = result.text
             }
             concatenateNumbers(btn.text.toString())
@@ -269,6 +312,7 @@ class MainActivity : AppCompatActivity() {
         if (operationFree && equation.text != ""){
             checkPoint()
             solveEquation()
+            read(result.text.toString())
         }
         pointFree = true
 
@@ -360,7 +404,10 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun concatenateNumbers(digit:String){
-        equation.text = "${equation.text}${digit}"
+        var nDigit = digit
+        read(digit)
+        if (digit == "−") nDigit = "-"
+        equation.text = "${equation.text}${nDigit}"
         operationFree = true
     }
 

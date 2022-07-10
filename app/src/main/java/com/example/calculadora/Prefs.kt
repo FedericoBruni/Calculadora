@@ -7,6 +7,7 @@ class Prefs(context: Context) {
     val VIBRATION_CONFIG = "VibrationConfig"
     val SOUND_CONFIG = "SoundConfig"
     val LANGUAGE_CONFIG = "LanguageConfig"
+    val READING_CONFIG = "ReadingConfig"
     val storage = context.getSharedPreferences(SHARED_NAME, 0)
 
     fun saveVibrationConfig(config: Boolean){
@@ -21,6 +22,10 @@ class Prefs(context: Context) {
         storage.edit().putString(LANGUAGE_CONFIG, config).apply()
     }
 
+    fun saveReadingConfig(config: Boolean) {
+        storage.edit().putBoolean(READING_CONFIG, config).apply()
+    }
+
     fun getVibrationConfig() : Boolean {
         return storage.getBoolean(VIBRATION_CONFIG, false)
     }
@@ -31,5 +36,9 @@ class Prefs(context: Context) {
 
     fun getLanguageConfig() : String {
         return storage.getString(LANGUAGE_CONFIG, "en")!!
+    }
+
+    fun getReadingConfig() : Boolean {
+        return storage.getBoolean(READING_CONFIG, false)
     }
 }
