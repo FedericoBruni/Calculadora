@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_rate_us -> rateUsButtonListener()
-                R.id.nav_share -> Toast.makeText(applicationContext, "Share", Toast.LENGTH_SHORT).show()
+                R.id.nav_share -> shareButtonListener()
                 R.id.nav_about_us -> aboutUsButtonListener()
                 R.id.language -> languageButtonListener()
             }
@@ -86,6 +86,18 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setNavigationDrawerSwitchListeners(navView)
 
     }
+
+    private fun shareButtonListener() {
+        val sharingText = "Download this App!"
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, sharingText)
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
+        startActivity(Intent.createChooser(shareIntent, "Share text via"))
+
+    }
+
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts!!.setLanguage(Locale.getDefault())
