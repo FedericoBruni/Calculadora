@@ -9,7 +9,6 @@ import android.content.res.Configuration
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
-import android.provider.MediaStore
 import android.speech.tts.TextToSpeech
 import android.view.Gravity
 import android.widget.*
@@ -17,8 +16,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.calculadora.Calculator.Companion.prefs
 import com.google.android.gms.ads.AdRequest
@@ -312,6 +309,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun clearButtonOnClickListener(){
+        read(getString(R.string.delete))
         vibrateSound()
         cleanEquation()
         pointFree = true
@@ -324,14 +322,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (operationFree && equation.text != ""){
             checkPoint()
             solveEquation()
-            read(result.text.toString())
         }
+        if (result.text != "") read("=${result.text.toString()}")
         pointFree = true
 
     }
 
     private fun deleteButtonOnClickListener(){
         vibrateSound()
+        read(getString(R.string.delete))
         if (equation.text.isEmpty()){
             return//@setOnClickListener
         }

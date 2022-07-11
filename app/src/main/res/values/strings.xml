@@ -70,4 +70,6 @@ The data is manipulated at the code level, then processed in large quantities, b
     <string name="reading">Reading</string>
     <string name="language">Language</string>
 
+    <string name="delete">Delete</string>
+
 </resources>
