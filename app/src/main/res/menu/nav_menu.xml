@@ -55,6 +55,14 @@
             </item>
 
             <item
+                android:id="@+id/dark_mode"
+                android:title="@string/dark_mode"
+                android:icon="@drawable/ic_baseline_dark_mode_24"
+                app:actionViewClass="androidx.appcompat.widget.SwitchCompat">
+
+            </item>
+
+            <item
                 android:id="@+id/language"
                 android:title="@string/language"
                 android:icon="@drawable/ic_baseline_language_24"

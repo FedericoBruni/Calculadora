@@ -15,6 +15,9 @@ import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.SwitchCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.calculadora.Calculator.Companion.prefs
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var vibration = prefs.getVibrationConfig()
     private var sound = prefs.getSoundConfig()
     private var reading = prefs.getReadingConfig()
+    private var darkMode = prefs.getDarkModeConfig()
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var equation : TextView
     private lateinit var result : TextView
@@ -52,6 +56,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadLocate()
+        loadAppTheme()
         setContentView(R.layout.activity_main)
 
         tts = TextToSpeech(this, this)
@@ -78,6 +83,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         setNavigationDrawerSwitchListeners(navView)
 
+    }
+
+    private fun loadAppTheme() {
+        if (darkMode) AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        else AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
     }
 
     private fun shareButtonListener() {
@@ -135,6 +145,20 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val languageItem = navView.menu.findItem(R.id.language)
         if (prefs.getLanguageConfig() == "es") languageItem.setActionView(R.layout.flag_spanish)
         else languageItem.setActionView(R.layout.flag_english)
+
+        val darkModeItem = navView.menu.findItem(R.id.dark_mode)
+        val darkModeSwitch = darkModeItem.actionView as SwitchCompat
+        darkModeSwitch.isChecked = darkMode
+        darkModeSwitch.setOnClickListener {
+            if (darkModeSwitch.isChecked){
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+            }
+            darkMode = darkModeSwitch.isChecked
+            prefs.saveDarkModeConfig(darkMode)
+        }
+
     }
 
 
@@ -284,7 +308,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun numberButtonOnClickListener(btn: Button, zeroButton: Button) {
         vibrateSound()
         if (btn == zeroButton) {
-            if (equation.text.isEmpty()) return
+            if (equation.text == "0") return
         }
         concatenateNumbers(btn.text.toString())
 
@@ -315,7 +339,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (operationFree && equation.text != ""){
             checkPoint()
             solveEquation()
-            read("= ${result.text.toString()}")
+            read("= ${result.text}")
         } else read(result.text.toString())
 
         pointFree = true
@@ -486,7 +510,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         }
         val res = resultList[0]
-        result.text = res
+        result.text = removeRightZeros(res)
         equation.text = ""
     }
 

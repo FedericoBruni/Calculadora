@@ -72,5 +72,6 @@ The data is manipulated at the code level, then processed in large quantities, b
 
     <string name="delete">Delete</string>
     <string name="point">Point</string>
+    <string name="dark_mode">Dark Mode</string>
 
 </resources>
