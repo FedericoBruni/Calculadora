@@ -53,17 +53,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         super.onCreate(savedInstanceState)
         loadLocate()
         setContentView(R.layout.activity_main)
-//        tts = TextToSpeech(applicationContext, TextToSpeech.OnInitListener { status ->
-//            if (status != TextToSpeech.ERROR) {
-//                tts.language = Locale.getDefault()
-//            }
-//        })
+
         tts = TextToSpeech(this, this)
         mediaPlayer = MediaPlayer.create(this, R.raw.button_sound)
         setListeners()
         startAds()
 
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawerLayout = findViewById(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -97,7 +93,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            val result = tts!!.setLanguage(Locale.getDefault())
+            tts!!.language = Locale.getDefault()
         }
     }
 
@@ -135,6 +131,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             reading = readingSwitch.isChecked
             prefs.saveReadingConfig(reading)
         }
+
+        val languageItem = navView.menu.findItem(R.id.language)
+        if (prefs.getLanguageConfig() == "es") languageItem.setActionView(R.layout.flag_spanish)
+        else languageItem.setActionView(R.layout.flag_english)
     }
 
 
@@ -151,7 +151,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun read(string: String){
         if (reading){
-            tts.speak(string, TextToSpeech.QUEUE_FLUSH, null, "")
+            tts.speak(string.replace(".", getString(R.string.point)), TextToSpeech.QUEUE_FLUSH, null, "")
+            //println("\n\n\nVOICE: ${tts.voice}\n\n\nVOICE[S]: ${tts.voices}\n\n\n")
         }
     }
     private fun vibrateSound(){
@@ -199,16 +200,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun languageButtonListener(){
-//        var dialog = LanguageDialogFragment()
-//        dialog.on(baseContext)
-//        dialog.act(this)
-//        dialog.show(supportFragmentManager, "custom dialog")
-        //lateinit var dialog: AlertDialog
         val listLanguages = arrayOf("Spanish", "English")
         val mBuilder = AlertDialog.Builder(this)
-//        mBuilder.setItems(listLanguages) { _, which ->
-//            Toast.makeText(this@MainActivity, listLanguages[which], Toast.LENGTH_SHORT).show()
-//        }
         mBuilder.setSingleChoiceItems(listLanguages,-1) { dialog, which ->
             if (which == 0){
                 setLocate("es")
@@ -220,7 +213,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             dialog.dismiss()
             recreate()
         }
-        // builder.create().show();
         val mDialog = mBuilder.create()
         mDialog.show()
     }
@@ -301,6 +293,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun pointButtonOnClickListener(btn: Button){
         vibrateSound()
         if (pointFree) {
+            if (equation.text == "" || equation.text.last().toString() in operations) concatenateNumbers("0")
             concatenateNumbers(btn.text.toString())
             operationFree = false
             pointFree = false
@@ -322,8 +315,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (operationFree && equation.text != ""){
             checkPoint()
             solveEquation()
-        }
-        if (result.text != "") read("=${result.text.toString()}")
+            read("= ${result.text.toString()}")
+        } else read(result.text.toString())
+
         pointFree = true
 
     }
@@ -415,8 +409,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     @SuppressLint("SetTextI18n")
     private fun concatenateNumbers(digit:String){
+        read (digit)
         var nDigit = digit
-        read(digit)
         if (digit == "−") nDigit = "-"
         equation.text = "${equation.text}${nDigit}"
         operationFree = true
