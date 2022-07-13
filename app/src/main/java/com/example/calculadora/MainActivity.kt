@@ -417,6 +417,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         val numberButtons = listOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton)
+
         val operationButtons = listOf<Button>(divideButton, multiplyButton, additionButton, subtractButton)
 
         operationButtons.forEach { btn -> btn.setOnClickListener{operatorOnClickListener(btn, subtractButton)} }

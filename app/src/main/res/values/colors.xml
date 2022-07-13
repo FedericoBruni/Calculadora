@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+
+    <color name="background_color">#FFFFFFFF</color>
+    <color name="number_color">#FF33B5E5</color>
+    <color name="point_color">#FF33B5E5</color>
+    <color name="del_color">#999999</color>
+    <color name="clear_color">#999999</color>
+    <color name="operator_color">#FFFF8800</color>
+
+    <color name="equation_color">@color/black</color>
 </resources>
