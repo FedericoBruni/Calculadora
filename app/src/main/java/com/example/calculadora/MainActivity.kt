@@ -3,29 +3,25 @@ package com.example.calculadora
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
-import android.view.Gravity
 import android.widget.*
-import androidx.appcompat.app.ActionBarDrawerToggle
+//import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.calculadora.Calculator.Companion.prefs
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -33,20 +29,18 @@ import java.util.*
 import kotlin.collections.ArrayDeque
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
-    val ADDITION = "+"
-    val SUBTRACT = "-" //−
-    val MULTIPLY = "×"
-    val DIVISION = "÷"
-    private val operations = listOf("×", "÷", "+", "-")
+    private val ADDITION = "+"
+    private val SUBTRACT = "-" //−
+    private val MULTIPLY = "×"
+    private val DIVISION = "÷"
+    private val operations = listOf(ADDITION, SUBTRACT, MULTIPLY, DIVISION) //listOf("×", "÷", "+", "-")
     private var operationFree = true
     private var pointFree = true
-    private var count = 0
-    private var interAd : InterstitialAd? = null
     private var vibration = prefs.getVibrationConfig()
     private var sound = prefs.getSoundConfig()
     private var reading = prefs.getReadingConfig()
     private var darkMode = prefs.getDarkModeConfig()
-    private lateinit var toggle : ActionBarDrawerToggle
+    //private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var equation : TextView
     private lateinit var result : TextView
     private lateinit var drawerLayout : DrawerLayout
@@ -54,9 +48,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var tts : TextToSpeech
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        loadLocate()
         loadAppTheme()
+        loadLocate()
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         tts = TextToSpeech(this, this)
@@ -67,10 +61,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+//        drawerLayout.addDrawerListener(toggle)
+//        toggle.syncState()
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
@@ -103,17 +97,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            tts!!.language = Locale.getDefault()
+            tts.language = Locale.getDefault()
         }
     }
 
     public override fun onDestroy() {
         // Shutdown TTS when
         // activity is destroyed
-        if (tts != null) {
-            tts!!.stop()
-            tts!!.shutdown()
-        }
+        tts.stop()
+        tts.shutdown()
         super.onDestroy()
     }
     private fun loadLocate() {
@@ -150,17 +142,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val darkModeSwitch = darkModeItem.actionView as SwitchCompat
         darkModeSwitch.isChecked = darkMode
         darkModeSwitch.setOnClickListener {
-            if (darkModeSwitch.isChecked){
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-            }
             darkMode = darkModeSwitch.isChecked
             prefs.saveDarkModeConfig(darkMode)
+            loadAppTheme()
         }
 
     }
-
 
     private fun setSwitchListener(switch: SwitchCompat, feature: String){
         if (feature == "vibration") {
@@ -170,19 +157,16 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             sound = switch.isChecked
             prefs.saveSoundConfig(sound)
         }
-        Toast.makeText(applicationContext, "Vibration: $vibration\nSound: $sound\nReading: $reading", Toast.LENGTH_SHORT).show()
     }
 
     private fun read(string: String){
         if (reading){
             tts.speak(string.replace(".", getString(R.string.point)), TextToSpeech.QUEUE_FLUSH, null, "")
-            //println("\n\n\nVOICE: ${tts.voice}\n\n\nVOICE[S]: ${tts.voices}\n\n\n")
         }
     }
     private fun vibrateSound(){
         if (vibration) vibrate()
         if (sound) mediaPlayer.start()
-
     }
 
     private fun vibrate(){
@@ -203,24 +187,24 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            drawerLayout.closeDrawer(Gravity.LEFT)
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
     }
 
     private fun rateUsButtonListener(){
-            try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.android.chrome"))) //$packageName
-            } catch (e: ActivityNotFoundException) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.android.chrome")))
-            }
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.android.chrome"))) //$packageName
+        } catch (e: ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.android.chrome")))
+        }
     }
 
     private fun aboutUsButtonListener(){
-        var dialog = PrivacyPolicyDialogFragment()
-        dialog.show(supportFragmentManager, "custom dialog")
+        //val dialog = PrivacyPolicyDialogFragment()
+        PrivacyPolicyDialogFragment().show(supportFragmentManager, "custom dialog")
     }
 
     private fun languageButtonListener(){
@@ -237,10 +221,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             dialog.dismiss()
             recreate()
         }
-        val mDialog = mBuilder.create()
-        mDialog.show()
+        //val mDialog = mBuilder.create()
+        mBuilder.create().show()
     }
 
+    @Suppress("DEPRECATION")
     private fun setLocate(language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)
@@ -250,23 +235,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         prefs.saveLanguageConfig(language)
     }
 
-    /** Para que cargue un inter muchas veces, habría que separar los iniciadores y llamar a startInter() cada vez que
-        el count sea 0. */
     private fun startAds() {
         val adBanner = findViewById<AdView>(R.id.banner)
         val adRequest = AdRequest.Builder().build()
         adBanner.loadAd(adRequest)
-
-        InterstitialAd.load(this, "ca-app-pub-3940256099942544/8691691433", adRequest, object : InterstitialAdLoadCallback(){
-            override fun onAdFailedToLoad(interstitialAd: LoadAdError) {
-                interAd = null
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                interAd = interstitialAd
-            }
-
-        })
     }
 
     // Funciona como el onClickListener para el drawer navigation bar. NO funciona si se desliza, sólo cuando se clickea.
@@ -277,25 +249,18 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 //        return toggle.onOptionsItemSelected(item)
 //    }
 
-    private fun checkCount() {
-        if (count == 5){
-            showInterAd()
-            count = 0
-        }
-    }
-
-    private fun showInterAd(){
-        interAd?.show(this)
-    }
+//    private fun checkCount() {
+//        if (count == 5){
+//            //showInterAd()
+//            count = 0
+//        }
+//    }
 
     private fun operatorOnClickListener(btn: Button, subtractButton: Button){
         vibrateSound()
         if (operationFree) {
             if (equation.text == "") {
                 if ((btn != subtractButton) && (result.text == "")) return
-//                if (btn == subtractButton && result.text == ""){
-//                    result.text = "-"
-//                }
                 equation.text = result.text
             }
             concatenateNumbers(btn.text.toString())
@@ -367,15 +332,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         else if (caracterBorrado == ".") {
             pointFree = true
             operationFree = true
-            Toast.makeText(this, "juju 2", Toast.LENGTH_SHORT).show()
         }
         if (lastCharacter in operations) {
             operationFree = false
-            Toast.makeText(this, "juju 3", Toast.LENGTH_SHORT).show()
         }
         else if (lastCharacter == ".") {
             operationFree = false
-            Toast.makeText(this, "juju 4", Toast.LENGTH_SHORT).show()
         }
         equation.text = nuevaEcuacion
 
@@ -431,7 +393,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             return@setOnLongClickListener true
         }
     }
-
+    //replace("-", "--") en operatorsListener
     @SuppressLint("SetTextI18n")
     private fun concatenateNumbers(digit:String){
         read (digit)
@@ -537,6 +499,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             MULTIPLY -> res = n1.multiply(n2)
             DIVISION -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
+        //avoid right zeros?
         return removeLeftZeros(removeRightZeros(res.toString()))
     }
 

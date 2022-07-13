@@ -3,51 +3,51 @@ package com.example.calculadora
 import android.content.Context
 
 class Prefs(context: Context) {
-    val SHARED_NAME = "UserConfig"
-    val VIBRATION_CONFIG = "VibrationConfig"
-    val SOUND_CONFIG = "SoundConfig"
-    val LANGUAGE_CONFIG = "LanguageConfig"
-    val READING_CONFIG = "ReadingConfig"
-    val DARK_MODE_CONFIG = "DarkModeConfig"
-    val storage = context.getSharedPreferences(SHARED_NAME, 0)
+    private val sharedName = "UserConfig"
+    private val vibrationConfig = "VibrationConfig"
+    private val soundConfig = "SoundConfig"
+    private val languageConfigs = "languageConfigs"
+    private val readingConfigs = "ReadingConfig"
+    private val darkModeConfig = "DarkModeConfig"
+    private val storage = context.getSharedPreferences(sharedName, 0)
 
     fun saveVibrationConfig(config: Boolean){
-        storage.edit().putBoolean(VIBRATION_CONFIG, config).apply()
+        storage.edit().putBoolean(vibrationConfig, config).apply()
     }
 
     fun saveSoundConfig(config: Boolean){
-        storage.edit().putBoolean(SOUND_CONFIG, config).apply()
+        storage.edit().putBoolean(soundConfig, config).apply()
     }
 
     fun saveLanguageConfig(config: String){
-        storage.edit().putString(LANGUAGE_CONFIG, config).apply()
+        storage.edit().putString(languageConfigs, config).apply()
     }
 
     fun saveReadingConfig(config: Boolean) {
-        storage.edit().putBoolean(READING_CONFIG, config).apply()
+        storage.edit().putBoolean(readingConfigs, config).apply()
     }
 
     fun saveDarkModeConfig(config: Boolean) {
-        storage.edit().putBoolean(DARK_MODE_CONFIG, config).apply()
+        storage.edit().putBoolean(darkModeConfig, config).apply()
     }
 
     fun getVibrationConfig() : Boolean {
-        return storage.getBoolean(VIBRATION_CONFIG, false)
+        return storage.getBoolean(vibrationConfig, false)
     }
 
     fun getSoundConfig() : Boolean {
-        return storage.getBoolean(SOUND_CONFIG, false)
+        return storage.getBoolean(soundConfig, false)
     }
 
     fun getLanguageConfig() : String {
-        return storage.getString(LANGUAGE_CONFIG, "en")!!
+        return storage.getString(languageConfigs, "en")!!
     }
 
     fun getReadingConfig() : Boolean {
-        return storage.getBoolean(READING_CONFIG, false)
+        return storage.getBoolean(readingConfigs, false)
     }
 
     fun getDarkModeConfig() : Boolean {
-        return storage.getBoolean(DARK_MODE_CONFIG, true)
+        return storage.getBoolean(darkModeConfig, true)
     }
 }
