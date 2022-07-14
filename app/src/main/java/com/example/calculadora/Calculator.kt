@@ -9,6 +9,7 @@ class Calculator : Application() {
     companion object {
         lateinit var prefs: Prefs
     }
+
     override fun onCreate() {
         super.onCreate()
         MobileAds.initialize(this)

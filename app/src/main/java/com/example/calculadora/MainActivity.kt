@@ -79,11 +79,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Loads the app theme: dark or light.
     private fun loadAppTheme() {
         if (darkMode) AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         else AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
     }
 
+    // Listener of the share button.
     private fun shareButtonListener() {
         val sharingText = "Download this App!"
         val shareIntent = Intent()
@@ -95,24 +97,29 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // TTS onInit. When loaded, sets the language to the default.
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             tts.language = Locale.getDefault()
         }
     }
 
-    public override fun onDestroy() {
+    // TTS onDestroy.
+    override fun onDestroy() {
         // Shutdown TTS when
         // activity is destroyed
         tts.stop()
         tts.shutdown()
         super.onDestroy()
     }
+
+    // Gets the language stored in prefs and sets it to the Locate
     private fun loadLocate() {
         val language = prefs.getLanguageConfig()
         setLocate(language)
     }
 
+    // Listeners of Sound, Vibration, Reading, Language and DarkMode.
     private fun setNavigationDrawerSwitchListeners(navView: NavigationView) {
         val soundItem = navView.menu.findItem(R.id.sound)
         val soundSwitch = soundItem.actionView as SwitchCompat
@@ -149,6 +156,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Listener of VibrationSwitch and SoundSwitch.
     private fun setSwitchListener(switch: SwitchCompat, feature: String){
         if (feature == "vibration") {
             vibration = switch.isChecked
@@ -159,16 +167,20 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
+    // Reads the given string in the TTS.
     private fun read(string: String){
         if (reading){
             tts.speak(string.replace(".", getString(R.string.point)), TextToSpeech.QUEUE_FLUSH, null, "")
         }
     }
+
+    // Checks if vibration and sound are enabled, then calls their respective functions.
     private fun vibrateSound(){
         if (vibration) vibrate()
         if (sound) mediaPlayer.start()
     }
 
+    // Vibrate function. It is called when the Vibration Switch is enabled.
     private fun vibrate(){
         val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
@@ -186,6 +198,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             vib.vibrate(55)
         }
     }
+
+    // DrawerLayout onBackPressed. It is called when the back is pressed and the NavigationView is open.
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -194,6 +208,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
+    // Listener of the Rate Us Button. It opens the app package in Google Play or Internet.
     private fun rateUsButtonListener(){
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.android.chrome"))) //$packageName
@@ -202,11 +217,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
+    // Listener of the About Us Button. It creates the PrivacyPolicyDialogFragment and shows it.
     private fun aboutUsButtonListener(){
         //val dialog = PrivacyPolicyDialogFragment()
         PrivacyPolicyDialogFragment().show(supportFragmentManager, "custom dialog")
     }
 
+    // Listener of the Language Button. It creates an AlertDialog and shows it.
+    // If the first option is chosen (listLanguages[0]) -> set locates to ("es").
+    // If the second option is chosen -> set locates to ("en".
     private fun languageButtonListener(){
         val listLanguages = arrayOf("Spanish", "English")
         val mBuilder = AlertDialog.Builder(this)
@@ -221,11 +240,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             dialog.dismiss()
             recreate()
         }
-        //val mDialog = mBuilder.create()
         mBuilder.create().show()
     }
 
     @Suppress("DEPRECATION")
+    // Set locale to the given language (String) and stores it in prefs.
     private fun setLocate(language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)
@@ -235,6 +254,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         prefs.saveLanguageConfig(language)
     }
 
+    // Starts the Banner Ad.
     private fun startAds() {
         val adBanner = findViewById<AdView>(R.id.banner)
         val adRequest = AdRequest.Builder().build()
@@ -256,6 +276,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 //        }
 //    }
 
+    // Listener of Operator Buttons.
     private fun operatorOnClickListener(btn: Button, subtractButton: Button){
         vibrateSound()
         if (operationFree) {
@@ -270,6 +291,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Listener of Number Buttons.
     private fun numberButtonOnClickListener(btn: Button, zeroButton: Button) {
         vibrateSound()
         if (btn == zeroButton) {
@@ -279,6 +301,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Listener of Point Button.
     private fun pointButtonOnClickListener(btn: Button){
         vibrateSound()
         if (pointFree) {
@@ -290,6 +313,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Listener of Clear Button.
     private fun clearButtonOnClickListener(){
         read(getString(R.string.delete))
         vibrateSound()
@@ -299,6 +323,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Listener of Equals Button.
     private fun equalsButtonOnClickListener(){
         vibrateSound()
         if (operationFree && equation.text != ""){
@@ -311,6 +336,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Listener of Delete Button.
     private fun deleteButtonOnClickListener(){
         vibrateSound()
         read(getString(R.string.delete))
@@ -343,6 +369,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    // Checks if the equation contains a Point.
+    // Return true if it does, false otherwise.
     private fun checkPoint() : Boolean{
         val len = equation.text.length
         var c = 0
@@ -354,6 +382,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (c == 0) c = len
         return (equation.text.subSequence(len-c, len-1).contains('.'))
     }
+
+    // Finds all the Views and calls their respective listeners.
     private fun setListeners(){
         val zeroButton = findViewById<Button>(R.id.zero_button)
         val oneButton = findViewById<Button>(R.id.one_button)
@@ -395,6 +425,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
     //replace("-", "--") en operatorsListener
     @SuppressLint("SetTextI18n")
+    // Concatenates the Equation with the given digit.
     private fun concatenateNumbers(digit:String){
         read (digit)
         var nDigit = digit
@@ -403,11 +434,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         operationFree = true
     }
 
+    // Cleans the equation and the result views.
     private fun cleanEquation(){
         equation.text = ""
         result.text = ""
     }
 
+    // Solves the equation and puts the result in the result view.
     private fun solveEquation(){
         val initialInputList = equation.text.split("").toMutableList()
         initialInputList.removeAt(0)
@@ -477,6 +510,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         equation.text = ""
     }
 
+    // Sorts the operator in the stack.
     private fun sortOperators(newOperator:String, operatorsStack:ArrayDeque<String>, resultList:MutableList<String>){
         var orderTopOperator = operatorOrder(operatorsStack.last())
         val orderNewOperator = operatorOrder(newOperator)
@@ -490,6 +524,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
+    // Makes the respective operations with the given numbers. Returns the result.
     private fun makeOperation(n1:BigDecimal, n2:BigDecimal, operator:String): String {
         lateinit var res: BigDecimal
         val zeroBigDecimal = BigDecimal(0)
@@ -503,6 +538,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         return removeLeftZeros(removeRightZeros(res.toString()))
     }
 
+    // Removes the insignificant zeros of the left, and returns the "clean" number (in a String).
+    // Example -> removeLeftZeros("010") -> "10"
     private fun removeLeftZeros(num:String) : String{
         val pointIndex = num.indexOf(".")
         if (pointIndex == -1) return num
@@ -516,6 +553,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         return num.removeRange(0 until counter)
     }
 
+    // Removes the insignificant zeros of the right, and returns the "clean" number (in a String).
+    // Example -> removeRightZeros("10.50") -> "10.5"
     private fun removeRightZeros(num:String) : String {
         val pointIndex = num.indexOf(".")
         if (pointIndex == -1) return num
@@ -532,6 +571,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         return num.removeRange(len-counter-1 until len)
     }
 
+    // Returns the order of the given operator.
+    // Order (ascendant): subtract/addition -> division -> multiply
     private fun operatorOrder(operator: String): Int {
         when (operator){
             SUBTRACT -> return 0
