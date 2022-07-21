@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
 import android.widget.*
-//import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -30,7 +29,7 @@ import kotlin.collections.ArrayDeque
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private val ADDITION = "+"
-    private val SUBTRACT = "-" //−
+    private val SUBTRACT = "-"
     private val MULTIPLY = "×"
     private val DIVISION = "÷"
     private val operations = listOf(ADDITION, SUBTRACT, MULTIPLY, DIVISION) //listOf("×", "÷", "+", "-")
@@ -40,13 +39,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var sound = prefs.getSoundConfig()
     private var reading = prefs.getReadingConfig()
     private var darkMode = prefs.getDarkModeConfig()
-    //private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var equation : TextView
     private lateinit var result : TextView
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var mediaPlayer : MediaPlayer
     private lateinit var tts : TextToSpeech
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         loadAppTheme()
         loadLocate()
@@ -60,11 +57,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
-
-//        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-//        drawerLayout.addDrawerListener(toggle)
-//        toggle.syncState()
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
@@ -87,13 +79,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     // Listener of the share button.
     private fun shareButtonListener() {
-        val sharingText = "Download this App!"
+        val sharingText = "Download this App!\nhttps://play.google.com/store/apps/details?id=$packageName"
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_TEXT, sharingText)
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
-        startActivity(Intent.createChooser(shareIntent, "Share text via"))
+        startActivity(Intent.createChooser(shareIntent, "Share Via"))
 
     }
 
@@ -211,9 +203,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     // Listener of the Rate Us Button. It opens the app package in Google Play or Internet.
     private fun rateUsButtonListener(){
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.android.chrome"))) //$packageName
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))) //$packageName
         } catch (e: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.android.chrome")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
         }
     }
 

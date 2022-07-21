@@ -38,14 +38,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/t1_privacy_policy"
                 android:textSize="30sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p1"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -53,14 +55,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/t2"
                 android:textSize="30sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p2"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -68,14 +72,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st1"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p3"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -83,7 +89,8 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st2"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
 
             <TextView
@@ -91,7 +98,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/p4"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -99,14 +107,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st3"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p5"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -114,14 +124,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st4"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p6"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -129,14 +141,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st5"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p7"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -144,14 +158,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st6"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p8"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -159,14 +175,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st7"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p9"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -174,14 +192,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/t3"
                 android:textSize="30sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p10"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -189,14 +209,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st8"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p11"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
@@ -204,14 +226,16 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/st9"
                 android:textSize="25sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/p12"
                 android:textSize="20sp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:id="@+id/tv_google_play_PP"
@@ -220,7 +244,8 @@
                 android:text="@string/google_play_PP"
                 android:textSize="20sp"
                 android:layout_marginTop="20dp"
-                android:textColorLink="#0000EE">
+                android:textColorLink="#0000EE"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:id="@+id/tv_google_analytics_PP"
@@ -229,7 +254,8 @@
                 android:text="@string/google_analytics_PP"
                 android:textSize="20sp"
                 android:layout_marginTop="5dp"
-                android:textColorLink="#0000EE">
+                android:textColorLink="#0000EE"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:id="@+id/tv_google_admob_PP"
@@ -238,7 +264,8 @@
                 android:text="@string/google_admob_PP"
                 android:textSize="20sp"
                 android:layout_marginTop="5dp"
-                android:textColorLink="#0000EE">
+                android:textColorLink="#0000EE"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:id="@+id/tv_firebase_PP"
@@ -247,7 +274,8 @@
                 android:text="@string/firebase_PP"
                 android:textSize="20sp"
                 android:layout_marginTop="5dp"
-                android:textColorLink="#0000EE">
+                android:textColorLink="#0000EE"
+                android:textColor="@color/black">
             </TextView>
         </LinearLayout>
 

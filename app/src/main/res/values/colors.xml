@@ -10,12 +10,12 @@
     <color name="red">#FF0000</color>
 
     <color name="background_color">#FFFFFFFF</color>
-    <color name="number_color">#bfbfbf</color>
-    <color name="point_color">#bfbfbf</color>
-    <color name="del_color">#999999</color>
-    <color name="clear_color">#999999</color>
-    <color name="operator_color">#33cccc</color>
-    <color name="equals_color">#5cd6d6</color>
+    <color name="number_color">#a6a6a6</color>
+    <color name="point_color">#a6a6a6</color>
+    <color name="del_color">#808080</color>
+    <color name="clear_color">#808080</color>
+    <color name="operator_color">#29a3a3</color>
+    <color name="equals_color">#33cccc</color>
 
     <color name="equation_color">@color/black</color>
     <color name="nav_header_background_color">@color/white</color>
