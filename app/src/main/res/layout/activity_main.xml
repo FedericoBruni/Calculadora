@@ -24,9 +24,9 @@
             ads:adSize="BANNER"
             ads:adUnitId="ca-app-pub-8642498014440941/3803520542"
             ads:layout_constraintTop_toTopOf="parent"
-            ads:layout_constraintBottom_toBottomOf="@+id/gl_top_rv"
-            >
+            ads:layout_constraintBottom_toBottomOf="@+id/gl_top_rv">
         </com.google.android.gms.ads.AdView>
+
         <Button
             android:id="@+id/point_button"
             android:layout_width="0dp"

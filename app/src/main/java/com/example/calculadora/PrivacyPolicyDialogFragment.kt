@@ -19,9 +19,8 @@ class PrivacyPolicyDialogFragment: DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        var rootView: View = inflater.inflate(R.layout.privacy_policty_dialog_fragment, container, false)
-        return rootView
+    ): View {
+        return inflater.inflate(R.layout.privacy_policty_dialog_fragment, container, false)
     }
 
     override fun onStart() {

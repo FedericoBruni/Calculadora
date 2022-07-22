@@ -96,10 +96,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    // TTS onDestroy.
+    // TTS onDestroy. Shutdown TTS when the activity is destroyed.
     override fun onDestroy() {
-        // Shutdown TTS when
-        // activity is destroyed
         tts.stop()
         tts.shutdown()
         super.onDestroy()
@@ -145,7 +143,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             prefs.saveDarkModeConfig(darkMode)
             loadAppTheme()
         }
-
     }
 
     // Listener of VibrationSwitch and SoundSwitch.
@@ -227,7 +224,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             } else if (which == 1){
                 setLocate("en")
-
             }
             dialog.dismiss()
             recreate()
@@ -253,20 +249,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         adBanner.loadAd(adRequest)
     }
 
-    // Funciona como el onClickListener para el drawer navigation bar. NO funciona si se desliza, sólo cuando se clickea.
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        count ++
-//        Toast.makeText(applicationContext, "Clicked $count times.", Toast.LENGTH_SHORT).show()
-//        checkCount()
-//        return toggle.onOptionsItemSelected(item)
-//    }
 
-//    private fun checkCount() {
-//        if (count == 5){
-//            //showInterAd()
-//            count = 0
-//        }
-//    }
 
     // Listener of Operator Buttons.
     private fun operatorOnClickListener(btn: Button, subtractButton: Button){
@@ -318,12 +301,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     // Listener of Equals Button.
     private fun equalsButtonOnClickListener(){
         vibrateSound()
-        if (operationFree && equation.text != ""){
+        if (operationFree && equation.text.isNotEmpty()){
             checkPoint()
             solveEquation()
             read("= ${result.text}")
-        } else read(result.text.toString())
-
+        }
         pointFree = true
 
     }
@@ -335,19 +317,19 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (equation.text.isEmpty()){
             return//@setOnClickListener
         }
-        val nuevaEcuacion = equation.text.dropLast(1)
-        if (nuevaEcuacion.isEmpty()){
+        val newEquation = equation.text.dropLast(1)
+        if (newEquation.isEmpty()){
             equation.text = ""
             return//@setOnClickListener
         }
-        val lastCharacter = nuevaEcuacion.last().toString()
-        val caracterBorrado = equation.text[equation.text.length-1].toString()
-        if (caracterBorrado in operations) {
+        val lastCharacter = newEquation.last().toString()
+        val removedCharacter = equation.text[equation.text.length-1].toString()
+        if (removedCharacter in operations) {
             operationFree = true
             if (checkPoint()) pointFree = false
         }
 
-        else if (caracterBorrado == ".") {
+        else if (removedCharacter == ".") {
             pointFree = true
             operationFree = true
         }
@@ -357,7 +339,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         else if (lastCharacter == ".") {
             operationFree = false
         }
-        equation.text = nuevaEcuacion
+        equation.text = newEquation
 
     }
 
@@ -422,6 +404,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         read (digit)
         var nDigit = digit
         if (digit == "−") nDigit = "-"
+        if (equation.text.isNotEmpty() && result.text.isNotEmpty()){
+            equation.text = result.text
+            result.text = ""
+        }
         equation.text = "${equation.text}${nDigit}"
         operationFree = true
     }
@@ -499,7 +485,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         val res = resultList[0]
         result.text = removeRightZeros(res)
-        equation.text = ""
+        //equation.text = ""
     }
 
     // Sorts the operator in the stack.
