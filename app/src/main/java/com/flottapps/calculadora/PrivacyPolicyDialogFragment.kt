@@ -1,4 +1,4 @@
-package com.example.calculadora
+package com.flottapps.calculadora
 
 import android.app.Dialog
 import android.content.Intent
@@ -27,10 +27,7 @@ class PrivacyPolicyDialogFragment: DialogFragment() {
         super.onStart()
         val dialog: Dialog? = dialog
         if (dialog != null) {
-            //val width = ViewGroup.LayoutParams.MATCH_PARENT
-            //val height = ViewGroup.LayoutParams.MATCH_PARENT
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            //dialog.getWindow()?.setLayout(width, height)
             setListeners(dialog)
         }
     }

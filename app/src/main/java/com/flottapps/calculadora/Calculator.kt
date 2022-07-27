@@ -1,4 +1,4 @@
-package com.example.calculadora
+package com.flottapps.calculadora
 
 import android.app.Application
 import com.google.android.gms.ads.*

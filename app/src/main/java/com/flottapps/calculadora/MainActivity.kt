@@ -1,4 +1,4 @@
-package com.example.calculadora
+package com.flottapps.calculadora
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.calculadora.Calculator.Companion.prefs
+import com.flottapps.calculadora.Calculator.Companion.prefs
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.navigation.NavigationView
@@ -244,9 +244,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     // Starts the Banner Ad.
     private fun startAds() {
-        val adBanner = findViewById<AdView>(R.id.banner)
-        val adRequest = AdRequest.Builder().build()
-        adBanner.loadAd(adRequest)
+//        val adBanner = findViewById<AdView>(R.id.banner)
+//        val adRequest = AdRequest.Builder().build()
+//        adBanner.loadAd(adRequest)
     }
 
 

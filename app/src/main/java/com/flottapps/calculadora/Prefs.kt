@@ -1,6 +1,7 @@
-package com.example.calculadora
+package com.flottapps.calculadora
 
 import android.content.Context
+import java.util.*
 
 class Prefs(context: Context) {
     private val sharedName = "UserConfig"
@@ -40,7 +41,7 @@ class Prefs(context: Context) {
     }
 
     fun getLanguageConfig() : String {
-        return storage.getString(languageConfigs, "en")!!
+        return storage.getString(languageConfigs, Locale.getDefault().language)!!
     }
 
     fun getReadingConfig() : Boolean {

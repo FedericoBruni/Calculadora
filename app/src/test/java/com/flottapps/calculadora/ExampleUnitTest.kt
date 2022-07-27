@@ -1,4 +1,4 @@
-package com.example.calculadora
+package com.flottapps.calculadora
 
 import org.junit.Test
 

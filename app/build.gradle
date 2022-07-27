@@ -7,18 +7,19 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.calculadora"
+        applicationId "com.flottapps.calculadora"
         minSdk 23
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
