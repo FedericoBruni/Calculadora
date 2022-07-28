@@ -5,11 +5,14 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
 import android.widget.*
+import android.widget.TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -397,6 +400,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             return@setOnLongClickListener true
         }
     }
+
     //replace("-", "--") en operatorsListener
     @SuppressLint("SetTextI18n")
     // Concatenates the Equation with the given digit.

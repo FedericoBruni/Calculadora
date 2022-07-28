@@ -45,7 +45,7 @@ class Prefs(context: Context) {
     }
 
     fun getReadingConfig() : Boolean {
-        return storage.getBoolean(readingConfigs, false)
+        return storage.getBoolean(readingConfigs, true)
     }
 
     fun getDarkModeConfig() : Boolean {

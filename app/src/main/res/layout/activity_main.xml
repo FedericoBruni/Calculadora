@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-8642498014440941/3803520542"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
             ads:layout_constraintTop_toTopOf="parent"
             ads:layout_constraintBottom_toBottomOf="@+id/gl_top_rv">
         </com.google.android.gms.ads.AdView>
@@ -38,20 +38,21 @@
             android:text="."
             android:textStyle="bold"
             android:textSize="34sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_3"
             ads:layout_constraintHorizontal_bias="0.0"
             ads:layout_constraintStart_toStartOf="parent"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_1"
             ads:layout_constraintVertical_bias="0.0" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             ads:layout_constraintGuide_percent="0.25" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v_2"
             android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
             android:orientation="vertical"
 
             ads:layout_constraintGuide_percent="0.5" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v_1"
             android:layout_width="wrap_content"
@@ -67,28 +68,28 @@
             android:orientation="vertical"
 
             ads:layout_constraintGuide_percent="0.75" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             ads:layout_constraintGuide_percent="0.40" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             ads:layout_constraintGuide_percent="0.52" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             ads:layout_constraintGuide_percent="0.64" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h_2"
             android:layout_width="wrap_content"
@@ -112,11 +113,12 @@
             android:text="1"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_1"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_3"
             ads:layout_constraintStart_toStartOf="parent"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_2" />
-    
+
         <Button
             android:id="@+id/seven_button"
             android:layout_width="0dp"
@@ -127,11 +129,12 @@
             android:text="7"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_3"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_3"
             ads:layout_constraintStart_toStartOf="parent"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_4" />
-    
+
         <Button
             android:id="@+id/divide_button"
             android:layout_width="0dp"
@@ -141,11 +144,12 @@
             android:backgroundTint="@color/operator_color"
             android:text="÷"
             android:textSize="50sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_4"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_1"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_5" />
-    
+
         <Button
             android:id="@+id/eight_button"
             android:layout_width="0dp"
@@ -156,11 +160,12 @@
             android:text="8"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_3"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_2"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_3"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_4" />
-    
+
         <Button
             android:id="@+id/nine_button"
             android:layout_width="0dp"
@@ -171,11 +176,12 @@
             android:text="9"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_3"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_1"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_2"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_4" />
-    
+
         <Button
             android:id="@+id/multiply_button"
             android:layout_width="0dp"
@@ -185,11 +191,12 @@
             android:backgroundTint="@color/operator_color"
             android:text="×"
             android:textSize="50sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_3"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_1"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_4" />
-    
+
         <Button
             android:id="@+id/subtract_button"
             android:layout_width="0dp"
@@ -200,11 +207,12 @@
             android:text="−"
             android:textScaleX="1.2"
             android:textSize="50sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_2"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_1"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_3" />
-    
+
         <Button
             android:id="@+id/two_button"
             android:layout_width="0dp"
@@ -215,11 +223,12 @@
             android:text="2"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_1"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_2"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_3"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_2" />
-    
+
         <Button
             android:id="@+id/three_button"
             android:layout_width="0dp"
@@ -230,11 +239,12 @@
             android:text="3"
             android:textStyle="bold"
             android:textSize="34sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_1"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_1"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_2"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_2" />
-    
+
         <Button
             android:id="@+id/addition_button"
             android:layout_width="0dp"
@@ -244,12 +254,13 @@
             android:backgroundTint="@color/operator_color"
             android:text="+"
             android:textSize="50sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_1"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintHorizontal_bias="1.0"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_1"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_2" />
-    
+
         <Button
             android:id="@+id/equals_button"
             android:layout_width="0dp"
@@ -259,11 +270,12 @@
             android:backgroundTint="@color/equals_color"
             android:text="="
             android:textSize="50sp"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_1"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_1" />
-    
+
         <Button
             android:id="@+id/zero_button"
             android:layout_width="0dp"
@@ -274,11 +286,12 @@
             android:text="0"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_2"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_3"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_1" />
-    
+
         <Button
             android:id="@+id/six_button"
             android:layout_width="0dp"
@@ -289,11 +302,12 @@
             android:text="6"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_2"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_1"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_2"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_3" />
-    
+
         <Button
             android:id="@+id/five_button"
             android:layout_width="0dp"
@@ -304,11 +318,12 @@
             android:text="5"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_2"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_2"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_3"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_3" />
-    
+
         <Button
             android:id="@+id/four_button"
             android:layout_width="0dp"
@@ -319,6 +334,7 @@
             android:text="4"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_2"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_3"
             ads:layout_constraintStart_toStartOf="parent"
@@ -330,15 +346,16 @@
             android:layout_height="0dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:backgroundTint="#cc0000"
+            android:backgroundTint="@color/clear_color"
             android:text="CLEAR"
             android:textSize="34sp"
+            android:autoSizeTextType="uniform"
             android:textStyle="bold"
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_4"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_1"
             ads:layout_constraintStart_toStartOf="parent"
             ads:layout_constraintTop_toTopOf="@+id/gl_h_5" />
-    
+
         <TextView
             android:id="@+id/result_view"
             android:layout_width="0dp"
@@ -352,7 +369,7 @@
             ads:layout_constraintEnd_toStartOf="@+id/gl_right_rv"
             ads:layout_constraintStart_toStartOf="@+id/gl_left_rv"
             ads:layout_constraintTop_toTopOf="@+id/gl_top_rv" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_bottom_rv"
             android:layout_width="wrap_content"
@@ -360,7 +377,7 @@
             android:orientation="horizontal"
 
             ads:layout_constraintGuide_percent="0.2" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_top_rv"
             android:layout_width="wrap_content"
@@ -368,7 +385,7 @@
             android:orientation="horizontal"
 
             ads:layout_constraintGuide_percent="0.1" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_left_rv"
             android:layout_width="wrap_content"
@@ -376,7 +393,7 @@
             android:orientation="vertical"
 
             ads:layout_constraintGuide_percent="0.1" />
-    
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_right_rv"
             android:layout_width="wrap_content"
@@ -399,7 +416,7 @@
             android:gravity="center|end"
             android:textAlignment="textEnd"
             android:textColor="@color/equation_color"
-            android:textSize="40sp"
+            android:textSize="44sp"
 
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_5"
             ads:layout_constraintEnd_toStartOf="@+id/gl_right_rv"
@@ -421,6 +438,7 @@
             android:text="⌫"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:autoSizeTextType="uniform"
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toStartOf="@+id/gl_v_1"
             ads:layout_constraintStart_toStartOf="@+id/gl_v_2"

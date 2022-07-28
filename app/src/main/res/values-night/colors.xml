@@ -10,10 +10,10 @@
     <color name="red">#FFFFFF</color>
 
     <color name="background_color">#FF000000</color>
-    <color name="number_color">#bfbfbf</color>
-    <color name="point_color">#bfbfbf</color>
-    <color name="del_color">#999999</color>
-    <color name="clear_color">#999999</color>
+    <color name="number_color">#999999</color>
+    <color name="point_color">#999999</color>
+    <color name="del_color">#808080</color>
+    <color name="clear_color">#cc0000</color>
     <color name="operator_color">#33cccc</color>
     <color name="equals_color">#5cd6d6</color>
 
