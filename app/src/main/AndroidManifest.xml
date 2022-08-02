@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.flottapps.calculadora">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name="com.flottapps.calculadora.Calculator"
+        android:name=".Calculator"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,14 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Calculadora"
         tools:targetApi="31">
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8642498014440941~5234369320">
-        </meta-data>
+            android:value="ca-app-pub-8642498014440941~5234369320"></meta-data>
+
         <activity
-            android:name="com.flottapps.calculadora.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.SplashScreen" >
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,10 +34,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.flottapps.calculadora.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

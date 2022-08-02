@@ -416,7 +416,8 @@
             android:gravity="center|end"
             android:textAlignment="textEnd"
             android:textColor="@color/equation_color"
-            android:textSize="44sp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="44sp"
 
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_5"
             ads:layout_constraintEnd_toStartOf="@+id/gl_right_rv"

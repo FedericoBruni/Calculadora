@@ -516,7 +516,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             MULTIPLY -> res = n1.multiply(n2)
             DIVISION -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
-        //avoid right zeros?
         return removeLeftZeros(removeRightZeros(res.toString()))
     }
 

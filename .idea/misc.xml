@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-hdpi/splash_background.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-ldpi/splash_background.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-mdpi/splash_background.xml" value="0.167" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2115" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-xhdpi/splash_background.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-xxhdpi/splash_background.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-xxxhdpi/splash_background.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable-xxxhdpi/splash_backgroundv2.xml" value="0.167" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/ic_baseline_calculate_24.xml" value="0.1" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/ic_baseline_dark_mode_24.xml" value="0.139" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.209" />
@@ -18,6 +25,7 @@
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/round_corner_top.xml" value="0.25" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/sound_switch_layout.xml" value="0.1355" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/splash_background.xml" value="0.16" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/splash_backgroundv2.xml" value="0.167" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-land/activity_main.xml" value="0.1728395061728395" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-ldpi/activity_main.xml" value="0.98" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-mdpi/activity_main.xml" value="0.7318007662835249" />
@@ -25,8 +33,9 @@
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-sw320dp/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-sw480dp/activity_main.xml" value="0.153125" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-xxxhdpi/activity_main.xml" value="0.67" />
-        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/activity_main.xml" value="1.0" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/activity_splash_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/activity_splash_screen_activityv2.xml" value="0.2" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/english.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/flag_english.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/flag_spanish.xml" value="0.17346014492753623" />
@@ -35,6 +44,7 @@
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/nav_header.xml" value="0.25" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/privacy_policty_dialog_fragment.xml" value="0.9" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/sound_switch_layout.xml" value="0.1" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/vibrate_switch_layout.xml" value="0.1" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/widgets.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/menu/nav_menu.xml" value="1.25" />
