@@ -5,14 +5,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
 import android.widget.*
-import android.widget.TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -42,11 +39,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var sound = prefs.getSoundConfig()
     private var reading = prefs.getReadingConfig()
     private var darkMode = prefs.getDarkModeConfig()
+
     private lateinit var equation : TextView
     private lateinit var result : TextView
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var mediaPlayer : MediaPlayer
     private lateinit var tts : TextToSpeech
+
     override fun onCreate(savedInstanceState: Bundle?) {
         loadAppTheme()
         loadLocate()
@@ -71,8 +70,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             true
         }
         setNavigationDrawerSwitchListeners(navView)
-
     }
+
+
 
     // Loads the app theme: dark or light.
     private fun loadAppTheme() {
@@ -247,9 +247,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     // Starts the Banner Ad.
     private fun startAds() {
-//        val adBanner = findViewById<AdView>(R.id.banner)
-//        val adRequest = AdRequest.Builder().build()
-//        adBanner.loadAd(adRequest)
+        val adBanner = findViewById<AdView>(R.id.banner)
+        val adRequest = AdRequest.Builder().build()
+        adBanner.loadAd(adRequest)
     }
 
 
@@ -405,6 +405,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     @SuppressLint("SetTextI18n")
     // Concatenates the Equation with the given digit.
     private fun concatenateNumbers(digit:String){
+        if (result.text == getString(R.string.error)) result.text = ""
         read (digit)
         var nDigit = digit
         if (digit == "−") nDigit = "-"
@@ -484,12 +485,20 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 n1 = resultList[lastPos - 1].toBigDecimal()
                 n2 = resultList[lastPos].toBigDecimal()
                 resultList[lastPos-1] = makeOperation(n1, n2, orderedEquationList[i])
+                if (resultList[lastPos-1] == getString(R.string.error)){
+                    divisionByZeroError()
+                    return
+                }
                 resultList.removeAt(lastPos)
             }
         }
         val res = resultList[0]
         result.text = removeRightZeros(res)
-        //equation.text = ""
+    }
+
+    // Sets the text of the result to "Error".
+    private fun divisionByZeroError(){
+        result.text = getString(R.string.error)
     }
 
     // Sorts the operator in the stack.
@@ -514,7 +523,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             ADDITION -> res = n1.add(n2)
             SUBTRACT -> res = n1.subtract(n2)
             MULTIPLY -> res = n1.multiply(n2)
-            DIVISION -> res = if (n2 == zeroBigDecimal) zeroBigDecimal else n1.divide(n2, 10, RoundingMode.HALF_UP)
+            DIVISION -> if (n2 == zeroBigDecimal) return getString(R.string.error)
+                        else if (n1 == zeroBigDecimal) res = zeroBigDecimal
+                        else res = n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
         return removeLeftZeros(removeRightZeros(res.toString()))
     }

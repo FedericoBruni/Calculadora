@@ -37,6 +37,10 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".ViewPagerActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.OnBoardingScreen"/>
     </application>
 
 </manifest>

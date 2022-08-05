@@ -22,10 +22,15 @@
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/ic_baseline_vibration_24.xml" value="0.1355" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/ic_baseline_volume_up_24.xml" value="0.139" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1155" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/indicator_selector.xml" value="0.167" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/round_corner_top.xml" value="0.25" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/rounded_corners_background.xml" value="0.14" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/selected.xml" value="0.167" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/sound_switch_layout.xml" value="0.1355" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/splash_background.xml" value="0.16" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/splash_backgroundv2.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/unselected.xml" value="0.167" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/drawable/view_pager_background.xml" value="0.14" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-land/activity_main.xml" value="0.1728395061728395" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-ldpi/activity_main.xml" value="0.98" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout-mdpi/activity_main.xml" value="0.7318007662835249" />
@@ -42,10 +47,12 @@
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/language_dialog_fragment.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/logo_menu.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/nav_header.xml" value="0.25" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/onboarding.xml" value="0.98" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/privacy_policty_dialog_fragment.xml" value="0.9" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/sound_switch_layout.xml" value="0.1" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/vibrate_switch_layout.xml" value="0.1" />
+        <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/viewpager.xml" value="0.75" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/layout/widgets.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/menu/nav_menu.xml" value="1.25" />
         <entry key="..\:/Users/Fede/AndroidStudioProjects/Calculadora/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2115" />

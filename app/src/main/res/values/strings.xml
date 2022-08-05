@@ -74,4 +74,13 @@ The data is manipulated at the code level, then processed in large quantities, b
     <string name="point">Point</string>
     <string name="dark_mode">Dark Mode</string>
 
+    <string name="next">NEXT</string>
+    <string name="finish">FINISH</string>
+
+    <string name="ob_swipe_title">Configure the application</string>
+    <string name="ob_swipe_desc">You can configure the app in the drop-down menu that opens by swiping right the screen.</string>
+    <string name="ob_rate_us_title">Rate the app</string>
+    <string name="ob_rate_us_desc">If you enjoy using the app, please rate us on Google Play!</string>
+
+    <string name="error">Error</string>
 </resources>

@@ -73,4 +73,14 @@ The data is manipulated at the code level, then processed in large quantities, b
     <string name="delete">Borrar</string>
     <string name="point">Punto</string>
     <string name="dark_mode">Modo Oscuro</string>
+
+    <string name="next">SIGUIENTE</string>
+    <string name="finish">FINALIZAR</string>
+
+    <string name="ob_swipe_title">Configura la aplicación</string>
+    <string name="ob_swipe_desc">Puedes configurar la aplicación desplazando la pantalla de izquierda a derecha.</string>
+    <string name="ob_rate_us_title">Califica la aplicación</string>
+    <string name="ob_rate_us_desc">Si te gusta la aplicación, por favor califícanos en Google Play!</string>
+
+    <string name="error">Error</string>
 </resources>

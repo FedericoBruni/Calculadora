@@ -10,6 +10,7 @@ class Prefs(context: Context) {
     private val languageConfigs = "languageConfigs"
     private val readingConfigs = "ReadingConfig"
     private val darkModeConfig = "DarkModeConfig"
+    private val firstTimeConfig = "FirstTime"
     private val storage = context.getSharedPreferences(sharedName, 0)
 
     fun saveVibrationConfig(config: Boolean){
@@ -32,6 +33,10 @@ class Prefs(context: Context) {
         storage.edit().putBoolean(darkModeConfig, config).apply()
     }
 
+    fun saveFirstTimeConfig(){
+        storage.edit().putBoolean(firstTimeConfig, false).apply()
+    }
+
     fun getVibrationConfig() : Boolean {
         return storage.getBoolean(vibrationConfig, false)
     }
@@ -50,5 +55,9 @@ class Prefs(context: Context) {
 
     fun getDarkModeConfig() : Boolean {
         return storage.getBoolean(darkModeConfig, true)
+    }
+
+    fun getFirstTimeConfig() : Boolean {
+        return storage.getBoolean(firstTimeConfig, true)
     }
 }
