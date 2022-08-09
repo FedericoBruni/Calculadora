@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-8642498014440941/3803520542"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
             ads:layout_constraintTop_toTopOf="parent"
             ads:layout_constraintBottom_toBottomOf="@+id/gl_top_rv">
         </com.google.android.gms.ads.AdView>
@@ -418,6 +418,26 @@
             android:textColor="@color/equation_color"
             android:autoSizeTextType="uniform"
             android:autoSizeMaxTextSize="44sp"
+
+            ads:layout_constraintBottom_toTopOf="@+id/gl_h_5"
+            ads:layout_constraintEnd_toStartOf="@+id/gl_right_rv"
+
+            ads:layout_constraintHorizontal_bias="0.0"
+            ads:layout_constraintStart_toStartOf="@+id/gl_left_rv"
+            ads:layout_constraintTop_toTopOf="@id/gl_bottom_rv"
+
+            ads:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/equation_view_compat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center|end"
+            android:textAlignment="textEnd"
+            android:textColor="@color/equation_color"
+
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="44sp"
 
             ads:layout_constraintBottom_toTopOf="@+id/gl_h_5"
             ads:layout_constraintEnd_toStartOf="@+id/gl_right_rv"

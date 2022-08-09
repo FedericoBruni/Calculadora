@@ -9,12 +9,14 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
+import android.util.TypedValue
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setContentView(R.layout.activity_main)
 
         tts = TextToSpeech(this, this)
+        tts.speak("Hola", TextToSpeech.QUEUE_FLUSH, null, "")
         mediaPlayer = MediaPlayer.create(this, R.raw.button_sound)
         setListeners()
         startAds()
@@ -298,7 +301,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         cleanEquation()
         pointFree = true
         operationFree = true
-
     }
 
     // Listener of Equals Button.
@@ -381,8 +383,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val additionButton = findViewById<Button>(R.id.addition_button)
         val subtractButton = findViewById<Button>(R.id.subtract_button)
 
-        result = findViewById(R.id.result_view)
-        equation = findViewById(R.id.equation_view)
+
 
         val numberButtons = listOf<Button>(zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton,
             sevenButton, eightButton, nineButton)
@@ -399,6 +400,18 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             clearButtonOnClickListener()
             return@setOnLongClickListener true
         }
+
+        result = findViewById(R.id.result_view)
+
+        val sdkVersion = Build.VERSION.SDK_INT
+        equation = if (sdkVersion <= 25){
+            operationButtons.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35F) }
+            equalsButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35F)
+            findViewById<AppCompatTextView>(R.id.equation_view_compat)
+        } else {
+            findViewById(R.id.equation_view)
+        }
+        Toast.makeText(this, sdkVersion.toString(), Toast.LENGTH_LONG).show()
     }
 
     //replace("-", "--") en operatorsListener
