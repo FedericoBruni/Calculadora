@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setContentView(R.layout.activity_main)
 
         tts = TextToSpeech(this, this)
-        tts.speak("Hola", TextToSpeech.QUEUE_FLUSH, null, "")
+        tts.speak(".", TextToSpeech.QUEUE_FLUSH, null, "")
         mediaPlayer = MediaPlayer.create(this, R.raw.button_sound)
         setListeners()
         startAds()
@@ -402,16 +402,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
 
         result = findViewById(R.id.result_view)
-
-        val sdkVersion = Build.VERSION.SDK_INT
-        equation = if (sdkVersion <= 25){
+        equation = if (Build.VERSION.SDK_INT <= 25){
             operationButtons.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35F) }
             equalsButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35F)
             findViewById<AppCompatTextView>(R.id.equation_view_compat)
-        } else {
-            findViewById(R.id.equation_view)
-        }
-        Toast.makeText(this, sdkVersion.toString(), Toast.LENGTH_LONG).show()
+        } else { findViewById(R.id.equation_view) }
     }
 
     //replace("-", "--") en operatorsListener
