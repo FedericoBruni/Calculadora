@@ -250,9 +250,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     // Starts the Banner Ad.
     private fun startAds() {
-        val adBanner = findViewById<AdView>(R.id.banner)
-        val adRequest = AdRequest.Builder().build()
-        adBanner.loadAd(adRequest)
+//        val adBanner = findViewById<AdView>(R.id.banner)
+//        val adRequest = AdRequest.Builder().build()
+//        adBanner.loadAd(adRequest)
     }
 
 
@@ -311,7 +311,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             solveEquation()
             read("= ${result.text}")
         }
-        pointFree = true
+        if (!result.text.contains('.')) pointFree = true
 
     }
 
@@ -351,6 +351,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     // Checks if the equation contains a Point.
     // Return true if it does, false otherwise.
     private fun checkPoint() : Boolean{
+        if (equation.text.isEmpty()) return false
         val len = equation.text.length
         var c = 0
         for (i in len-1 downTo 0){
