@@ -250,9 +250,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     // Starts the Banner Ad.
     private fun startAds() {
-//        val adBanner = findViewById<AdView>(R.id.banner)
-//        val adRequest = AdRequest.Builder().build()
-//        adBanner.loadAd(adRequest)
+        val adBanner = findViewById<AdView>(R.id.banner)
+        val adRequest = AdRequest.Builder().build()
+        adBanner.loadAd(adRequest)
     }
 
 
@@ -524,17 +524,22 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
+    private fun isZero(num: BigDecimal) : Boolean{
+        val test = num.toFloat() - 0F
+        val zeroFloat = 0F
+        return (test == zeroFloat)
+    }
     // Makes the respective operations with the given numbers. Returns the result.
     private fun makeOperation(n1:BigDecimal, n2:BigDecimal, operator:String): String {
         lateinit var res: BigDecimal
-        val zeroBigDecimal = BigDecimal(0)
         when(operator) {
             ADDITION -> res = n1.add(n2)
             SUBTRACT -> res = n1.subtract(n2)
             MULTIPLY -> res = n1.multiply(n2)
-            DIVISION -> if (n2 == zeroBigDecimal) return getString(R.string.error)
-                        else if (n1 == zeroBigDecimal) res = zeroBigDecimal
-                        else res = n1.divide(n2, 10, RoundingMode.HALF_UP)
+            DIVISION -> res =
+                if (isZero(n2)) return getString(R.string.error)
+                else if (isZero(n1)) return "0"
+                else n1.divide(n2, 10, RoundingMode.HALF_UP)
         }
         return removeLeftZeros(removeRightZeros(res.toString()))
     }
